@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Characters/CharacterBase.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "PrototypeCharacter.generated.h"
 
+class UInputActionToGameplayTag;
 class APlayerStateBase;
 class USpringArmComponent;
 class UCameraComponent;
@@ -79,5 +81,11 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+private:
+	UPROPERTY(EditDefaultsOnly, Category= "Input")
+	TObjectPtr<UInputActionToGameplayTag> InputActionToGameplayTag;
+	void AbilityInputTagPressed(FGameplayTag GameplayTag);
+	void AbilityInputTagReleased(FGameplayTag GameplayTag);
+	void AbilityInputTagHeld(FGameplayTag GameplayTag);
 };
 

@@ -9,10 +9,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
-#include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
+#include "Input/CustomInputComponent.h"
 #include "Player/PlayerStateBase.h"
 
 
@@ -81,6 +81,21 @@ void APrototypeCharacter::GrantDefaultAbilities()
 	}
 }
 
+void APrototypeCharacter::AbilityInputTagPressed(FGameplayTag GameplayTag)
+{
+	AbilitySystemComponent->AbilityInputTagPressed(GameplayTag);	
+}
+
+void APrototypeCharacter::AbilityInputTagReleased(FGameplayTag GameplayTag)
+{
+	AbilitySystemComponent->AbilityInputTagReleased(GameplayTag);
+}
+
+void APrototypeCharacter::AbilityInputTagHeld(FGameplayTag GameplayTag)
+{
+	AbilitySystemComponent->AbilityInputTagHeld(GameplayTag);
+}
+
 void APrototypeCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -118,7 +133,7 @@ void APrototypeCharacter::NotifyControllerChanged()
 void APrototypeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+	if (UCustomInputComponent* EnhancedInputComponent = Cast<UCustomInputComponent>(PlayerInputComponent)) {
 		
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
@@ -129,6 +144,7 @@ void APrototypeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APrototypeCharacter::Look);
+		EnhancedInputComponent->BindAbilityActions(InputActionToGameplayTag, this, &APrototypeCharacter::AbilityInputTagPressed, &APrototypeCharacter::AbilityInputTagReleased, &APrototypeCharacter::AbilityInputTagHeld);
 	}
 
 	

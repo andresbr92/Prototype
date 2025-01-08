@@ -16,6 +16,12 @@ class PROTOTYPE_API UCustomAbilitySystemComponent : public UAbilitySystemCompone
 
 public:
 	virtual void GrantDefaultAbilities(TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities);
+
+	void AbilityInputTagPressed(const FGameplayTag& InputTag);
+	void AbilityInputTagHeld(const FGameplayTag& InputTag);
+	void AbilityInputTagReleased(const FGameplayTag& InputTag);
+
+
 	
 	
 };
