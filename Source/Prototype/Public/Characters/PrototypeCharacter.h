@@ -9,6 +9,7 @@
 #include "Logging/LogMacros.h"
 #include "PrototypeCharacter.generated.h"
 
+class AItemBase;
 class UInputActionToGameplayTag;
 class APlayerStateBase;
 class USpringArmComponent;
@@ -53,6 +54,8 @@ public:
 	
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+	FORCEINLINE void SetOverlappingItem(AItemBase* Item) { OverlappingItem = Item; }
+	
 	
 
 protected:
@@ -76,6 +79,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category= "Default Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -87,5 +91,8 @@ private:
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
 	void AbilityInputTagReleased(FGameplayTag GameplayTag);
 	void AbilityInputTagHeld(FGameplayTag GameplayTag);
+	
+	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<AItemBase> OverlappingItem;
 };
 
