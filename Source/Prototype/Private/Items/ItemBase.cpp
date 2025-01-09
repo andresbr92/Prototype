@@ -3,6 +3,7 @@
 
 #include "Items/ItemBase.h"
 
+#include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "Characters/PrototypeCharacter.h"
 #include "Components/SphereComponent.h"
 
@@ -25,6 +26,11 @@ void AItemBase::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	APrototypeCharacter* Character = Cast<APrototypeCharacter>(OtherActor);
 	if (!Character) return;
 	Character->SetOverlappingItem(this);
+	UCustomAbilitySystemComponent* AbilitySystemComponent = Character->GetCustomAbilitySystemComponent();
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->GrantInteractionAbility(InteractionAbility);
+	}
 	
 }
 
@@ -34,6 +40,11 @@ void AItemBase::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	APrototypeCharacter* Character = Cast<APrototypeCharacter>(OtherActor);
 	if (!Character) return;
 	Character->SetOverlappingItem(nullptr);
+	UCustomAbilitySystemComponent* AbilitySystemComponent = Character->GetCustomAbilitySystemComponent();
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->ClearInteractionAbility();
+	}
 }
 
 // Called when the game starts or when spawned

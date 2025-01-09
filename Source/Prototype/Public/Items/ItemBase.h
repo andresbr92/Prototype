@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CustomPhysics/PrototypeCollisionsChannel.h"
 #include "ItemBase.generated.h"
 
+class UGameplayAbilityBase;
 class USphereComponent;
 
 UCLASS()
@@ -30,6 +32,8 @@ public:
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
+	UPROPERTY(EditAnywhere, Category = "Ability System")
+	TSubclassOf<UGameplayAbilityBase> InteractionAbility;
 	
 	
 

@@ -40,3 +40,24 @@ void UCustomAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& Inpu
 void UCustomAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& InputTag)
 {
 }
+
+void UCustomAbilitySystemComponent::EquipAbility()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("EquipAbility"));
+}
+
+void UCustomAbilitySystemComponent::GrantInteractionAbility(const TSubclassOf<UGameplayAbilityBase>& InteractionAbility)
+{
+	FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(InteractionAbility, 1);
+	FGameplayAbilitySpecHandle AbilitySpecHandle = AbilitySpec.Handle;
+	InteractionAbilityHandle = AbilitySpecHandle;
+	
+	GiveAbility(AbilitySpec);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("GrantInteractionbility"));
+	
+}
+
+void UCustomAbilitySystemComponent::ClearInteractionAbility()
+{
+	ClearAbility(InteractionAbilityHandle);
+}

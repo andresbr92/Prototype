@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "CustomAbilitySystemComponent.generated.h"
 
+class UGameplayAbilityBase;
 /**
  * 
  */
@@ -21,7 +22,12 @@ public:
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 
+	void EquipAbility();
+	void GrantInteractionAbility(const TSubclassOf<UGameplayAbilityBase>& InteractionAbility);
+	void ClearInteractionAbility();
 
-	
+
+private:
+	FGameplayAbilitySpecHandle InteractionAbilityHandle;
 	
 };
