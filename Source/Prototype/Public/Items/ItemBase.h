@@ -32,12 +32,12 @@ protected:
 
 public:
 	virtual void GatherInteractionOptions(const FInteractionQuery& InteractQuery, FInteractionOptionBuilder& InteractionBuilder) override;
-	UPROPERTY(EditAnywhere);
-	TObjectPtr<UStaticMeshComponent> Mesh;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> Sphere;
-	UPROPERTY(EditAnywhere, Category = "Ability System")
-	TSubclassOf<UGameplayAbilityBase> InteractionAbility;
+	// UPROPERTY(EditAnywhere);
+	// TObjectPtr<UStaticMeshComponent> Mesh;
+	// UPROPERTY(VisibleAnywhere)
+	// TObjectPtr<USphereComponent> Sphere;
+	// UPROPERTY(EditAnywhere, Category = "Ability System")
+	// TSubclassOf<UGameplayAbilityBase> InteractionAbility;
 	
 	
 

@@ -31,6 +31,7 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 
 void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions)
 {
+
 	// Verifica si la habilidad tiene información de contexto válida
 	if (CurrentActorInfo && CurrentActorInfo->PlayerController.IsValid())
 	{
@@ -39,6 +40,8 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 
 		// Limpia la lista de opciones actuales
 		CurrentOptions = InteractiveOptions;
+		// show length of array
+		
 
 		// Itera sobre las opciones de interacción detectadas
 		for (const FInteractionOption& InteractionOption : InteractiveOptions)

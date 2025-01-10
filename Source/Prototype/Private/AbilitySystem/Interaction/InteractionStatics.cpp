@@ -4,6 +4,7 @@
 #include "AbilitySystem/Interaction/InteractionStatics.h"
 
 #include "AbilitySystem/Interaction/IInteractableTarget.h"
+#include "Engine/OverlapResult.h"
 
 UInteractionStatics::UInteractionStatics()
 	: Super(FObjectInitializer::Get())
@@ -44,5 +45,38 @@ void UInteractionStatics::GetInteractableTargetsFromActor(AActor* Actor,
 	for (UActorComponent* InteractableComponent : InteractableComponents)
 	{
 		OutInteractableTargets.Add(TScriptInterface<IInteractableTarget>(InteractableComponent));
+	}
+}
+
+void UInteractionStatics::AppendInteractableTargetsFromOverlapResults(const TArray<FOverlapResult>& OverlapResults, TArray<TScriptInterface<IInteractableTarget>>& OutInteractableTargets)
+{
+	for (const FOverlapResult& Overlap : OverlapResults)
+	{
+		TScriptInterface<IInteractableTarget> InteractableActor(Overlap.GetActor());
+		if (InteractableActor)
+		{
+			OutInteractableTargets.AddUnique(InteractableActor);
+		}
+
+		TScriptInterface<IInteractableTarget> InteractableComponent(Overlap.GetComponent());
+		if (InteractableComponent)
+		{
+			OutInteractableTargets.AddUnique(InteractableComponent);
+		}
+	}
+}
+
+void UInteractionStatics::AppendInteractableTargetsFromHitResult(const FHitResult& HitResult, TArray<TScriptInterface<IInteractableTarget>>& OutInteractableTargets)
+{
+	TScriptInterface<IInteractableTarget> InteractableActor(HitResult.GetActor());
+	if (InteractableActor)
+	{
+		OutInteractableTargets.AddUnique(InteractableActor);
+	}
+
+	TScriptInterface<IInteractableTarget> InteractableComponent(HitResult.GetComponent());
+	if (InteractableComponent)
+	{
+		OutInteractableTargets.AddUnique(InteractableComponent);
 	}
 }
