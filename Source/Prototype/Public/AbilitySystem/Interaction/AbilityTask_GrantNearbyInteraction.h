@@ -16,6 +16,7 @@ class PROTOTYPE_API UAbilityTask_GrantNearbyInteraction : public UAbilityTask
 
 	
 	virtual void Activate() override;
+	virtual void OnGameplayTaskActivated(UGameplayTask& Task) override;
 
 	/** Wait until an overlap occurs. This will need to be better fleshed out so we can specify game specific collision requirements */
 	UFUNCTION(BlueprintCallable, Category="Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))

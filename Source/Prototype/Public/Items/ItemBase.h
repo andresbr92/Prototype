@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystem/Interaction/IInteractableTarget.h"
 #include "GameFramework/Actor.h"
 #include "CustomPhysics/PrototypeCollisionsChannel.h"
 #include "ItemBase.generated.h"
@@ -11,7 +12,7 @@ class UGameplayAbilityBase;
 class USphereComponent;
 
 UCLASS()
-class PROTOTYPE_API AItemBase : public AActor
+class PROTOTYPE_API AItemBase : public AActor, public IInteractableTarget
 {
 	GENERATED_BODY()
 	
@@ -26,8 +27,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere)
+	FInteractionOption Option;
 
 public:
+	virtual void GatherInteractionOptions(const FInteractionQuery& InteractQuery, FInteractionOptionBuilder& InteractionBuilder) override;
 	UPROPERTY(EditAnywhere);
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(VisibleAnywhere)

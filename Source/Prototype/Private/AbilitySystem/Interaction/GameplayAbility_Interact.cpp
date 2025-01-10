@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "AbilitySystem/Interaction/AbilityTask_GrantNearbyInteraction.h"
+#include "AbilitySystem/Interaction/InteractionStatics.h"
 
 UGameplayAbility_Interact::UGameplayAbility_Interact(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -24,6 +25,7 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 	{
 		UAbilityTask_GrantNearbyInteraction* Task = UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(this, InteractionScanRange, InteractionScanRate);
 		Task->ReadyForActivation();
+		
 	}
 }
 
@@ -43,7 +45,7 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 		{
 			// Obtén el actor asociado a esta opción de interacción
 			AActor* InteractableTargetActor = UInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
-
+		
 			if (InteractableTargetActor)
 			{
 				// Muestra un mensaje con el nombre del actor interactuable

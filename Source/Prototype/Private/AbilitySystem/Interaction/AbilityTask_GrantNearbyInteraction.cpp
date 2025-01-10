@@ -20,9 +20,23 @@ void UAbilityTask_GrantNearbyInteraction::Activate()
 	Super::Activate();
 }
 
-UAbilityTask_GrantNearbyInteraction* UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility,
-	float InteractionScanRange, float InteractionScanRate)
+void UAbilityTask_GrantNearbyInteraction::OnGameplayTaskActivated(UGameplayTask& Task)
 {
+	Super::OnGameplayTaskActivated(Task);
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("UAbilityTask_GrantNearbyInteraction::OnGameplayTaskActivated"));
+	}
+}
+
+UAbilityTask_GrantNearbyInteraction* UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility,
+                                                                                                             float InteractionScanRange, float InteractionScanRate)
+{
+	// print something to the screen
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors"));
+	}
 	UAbilityTask_GrantNearbyInteraction* MyObj = NewAbilityTask<UAbilityTask_GrantNearbyInteraction>(OwningAbility);
 	MyObj->InteractionScanRange = InteractionScanRange;
 	MyObj->InteractionScanRate = InteractionScanRate;

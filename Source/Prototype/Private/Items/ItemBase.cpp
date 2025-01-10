@@ -58,6 +58,12 @@ void AItemBase::BeginPlay()
 	
 }
 
+void AItemBase::GatherInteractionOptions(const FInteractionQuery& InteractQuery,
+	FInteractionOptionBuilder& InteractionBuilder)
+{
+	InteractionBuilder.AddInteractionOption(Option);
+}
+
 // Called every frame
 
 

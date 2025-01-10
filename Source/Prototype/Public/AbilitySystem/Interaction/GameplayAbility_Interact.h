@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InteractionOption.h"
 #include "AbilitySystem/GameplayAbilities/GameplayAbilityBase.h"
 #include "GameplayAbility_Interact.generated.h"
 
-struct FInteractionOption;
 class UObject;
 struct FFrame;
 struct FGameplayAbilityActorInfo;
