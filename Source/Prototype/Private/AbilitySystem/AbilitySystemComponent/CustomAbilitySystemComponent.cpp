@@ -61,3 +61,8 @@ void UCustomAbilitySystemComponent::ClearInteractionAbility()
 {
 	ClearAbility(InteractionAbilityHandle);
 }
+
+
+
+
+

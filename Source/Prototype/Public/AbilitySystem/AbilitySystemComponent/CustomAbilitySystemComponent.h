@@ -25,6 +25,7 @@ public:
 	void EquipAbility();
 	void GrantInteractionAbility(const TSubclassOf<UGameplayAbilityBase>& InteractionAbility);
 	void ClearInteractionAbility();
+	void TryActivateAbilityOnSpawn();
 
 
 private:

@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
-#include "GrantNearbyInteraction.generated.h"
+#include "AbilityTask_GrantNearbyInteraction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROTOTYPE_API UGrantNearbyInteraction : public UAbilityTask
+class PROTOTYPE_API UAbilityTask_GrantNearbyInteraction : public UAbilityTask
 {
 	GENERATED_UCLASS_BODY()
 
@@ -19,7 +19,7 @@ class PROTOTYPE_API UGrantNearbyInteraction : public UAbilityTask
 
 	/** Wait until an overlap occurs. This will need to be better fleshed out so we can specify game specific collision requirements */
 	UFUNCTION(BlueprintCallable, Category="Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
-	static UGrantNearbyInteraction* GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility, float InteractionScanRange, float InteractionScanRate);
+	static UAbilityTask_GrantNearbyInteraction* GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility, float InteractionScanRange, float InteractionScanRate);
 
 private:
 	virtual void OnDestroy(bool AbilityEnded) override;
