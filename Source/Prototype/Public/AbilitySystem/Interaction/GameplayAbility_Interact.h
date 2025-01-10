@@ -6,6 +6,7 @@
 #include "AbilitySystem/GameplayAbilities/GameplayAbilityBase.h"
 #include "GameplayAbility_Interact.generated.h"
 
+struct FInteractionOption;
 class UObject;
 struct FFrame;
 struct FGameplayAbilityActorInfo;
@@ -21,11 +22,14 @@ class PROTOTYPE_API UGameplayAbility_Interact : public UGameplayAbilityBase
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	// UFUNCTION(BlueprintCallable)
-	// void UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions);
+	void UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions);
 	UFUNCTION(BlueprintCallable)
 	void TriggerInteraction();
 
 protected:
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FInteractionOption> CurrentOptions;
 
 	UPROPERTY(EditDefaultsOnly)
 	float InteractionScanRate = 0.1f;
