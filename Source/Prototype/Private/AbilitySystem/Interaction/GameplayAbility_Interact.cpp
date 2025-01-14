@@ -12,6 +12,8 @@ UGameplayAbility_Interact::UGameplayAbility_Interact(const FObjectInitializer& O
 	: Super(ObjectInitializer)
 {
 	ActivationPolicy = EPrototypeAbilityActivationPolicy::OnSpawn;
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 }
 
 void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -23,6 +25,7 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 	UCustomAbilitySystemComponent* CustomAbilitySystemComponent = Cast<UCustomAbilitySystemComponent>(AbilitySystem);
 	if (CustomAbilitySystemComponent && CustomAbilitySystemComponent->GetOwnerRole() == ROLE_Authority)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("activating ability only on server"));
 		UAbilityTask_GrantNearbyInteraction* Task = UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(this, InteractionScanRange, InteractionScanRate);
 		Task->ReadyForActivation();
 		
@@ -63,7 +66,7 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 		}
 
 		// Mensaje para indicar que las opciones de interacción se actualizaron
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Opciones de interacción actualizadas."));
+		// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Opciones de interacción actualizadas."));
 	}
 	else
 	{
