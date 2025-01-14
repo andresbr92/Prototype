@@ -3,3 +3,17 @@
 
 #include "Items/WeaponBase.h"
 
+AWeaponBase::AWeaponBase()
+{
+}
+
+void AWeaponBase::GatherInteractionOptions(const FInteractionQuery& InteractQuery,
+                                           FInteractionOptionBuilder& OptionBuilder)
+{
+	Super::GatherInteractionOptions(InteractQuery, OptionBuilder);
+}
+
+FInventoryPickup AWeaponBase::GetPickupInventory() const
+{
+	return StaticInventory;
+}

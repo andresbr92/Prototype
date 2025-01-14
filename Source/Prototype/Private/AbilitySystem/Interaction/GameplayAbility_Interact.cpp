@@ -7,7 +7,9 @@
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "AbilitySystem/Interaction/AbilityTask_GrantNearbyInteraction.h"
 #include "AbilitySystem/Interaction/InteractionStatics.h"
-
+#include "NativeGameplayTags.h"
+#include "AbilitySystem/Interaction/IInteractableTarget.h"
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Input.InputTag_E");
 UGameplayAbility_Interact::UGameplayAbility_Interact(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -77,10 +79,49 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 
 void UGameplayAbility_Interact::TriggerInteraction()
 {
-	UAbilitySystemComponent* AbilitySystem = GetAbilitySystemComponentFromActorInfo();
-	if (AbilitySystem && AbilitySystem->GetOwnerRole() == ROLE_Authority)
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Triggering ability"));
+	if (CurrentOptions.Num() == 0)
 	{
-		UAbilityTask_GrantNearbyInteraction* Task = UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(this, InteractionScanRange, InteractionScanRate);
-		Task->ReadyForActivation();
+		return;
+	}
+
+	UAbilitySystemComponent* AbilitySystem = GetAbilitySystemComponentFromActorInfo();
+	if (AbilitySystem)
+	{
+		const FInteractionOption& InteractionOption = CurrentOptions[0];
+
+		AActor* Instigator = GetAvatarActorFromActorInfo();
+		AActor* InteractableTargetActor = UInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
+
+		// Allow the target to customize the event data we're about to pass in, in case the ability needs custom data
+		// that only the actor knows.
+		FGameplayEventData Payload;
+		Payload.EventTag = TAG_Ability_Interaction_Activate;
+		Payload.Instigator = Instigator;
+		Payload.Target = InteractableTargetActor;
+
+		// If needed we allow the interactable target to manipulate the event data so that for example, a button on the wall
+		// may want to specify a door actor to execute the ability on, so it might choose to override Target to be the
+		// door actor.
+		InteractionOption.InteractableTarget->CustomizeInteractionEventData(TAG_Ability_Interaction_Activate, Payload);
+		
+
+		// Grab the target actor off the payload we're going to use it as the 'avatar' for the interaction, and the
+		// source InteractableTarget actor as the owner actor.
+		AActor* TargetActor = const_cast<AActor*>(ToRawPtr(Payload.Target));
+
+		// The actor info needed for the interaction.
+		FGameplayAbilityActorInfo ActorInfo;
+		ActorInfo.InitFromActor(InteractableTargetActor, TargetActor, InteractionOption.TargetAbilitySystem);
+
+		// Trigger the ability using event tag.
+		
+		const bool bSuccess = InteractionOption.TargetAbilitySystem->TriggerAbilityFromGameplayEvent(
+			InteractionOption.TargetInteractionAbilityHandle,
+			&ActorInfo,
+			TAG_Ability_Interaction_Activate,
+			&Payload,
+			*InteractionOption.TargetAbilitySystem
+		);
 	}
 }
