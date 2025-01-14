@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "PlayerControllerBase.generated.h"
 
+class UPTInventoryManagerComponent;
 /**
  * 
  */
@@ -13,8 +14,10 @@ UCLASS()
 class PROTOTYPE_API APlayerControllerBase : public APlayerController
 {
 	GENERATED_BODY()
+	APlayerControllerBase();
 public:
-	
+	UPROPERTY(EditDefaultsOnly, Category="Inventory")
+	TObjectPtr<UPTInventoryManagerComponent> InventoryManagerComponent;
 	
 	
 };

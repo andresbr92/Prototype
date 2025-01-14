@@ -5,5 +5,10 @@
 
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "Characters/CharacterBase.h"
+#include "Inventory/PTInventoryManagerComponent.h"
 
 
+APlayerControllerBase::APlayerControllerBase()
+{
+	InventoryManagerComponent = CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
+}
