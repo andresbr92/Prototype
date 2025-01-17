@@ -5,6 +5,20 @@
 
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 
+UGameplayAbilityBase::UGameplayAbilityBase(const FObjectInitializer& ObjectInitializer)
+: Super(ObjectInitializer)
+{
+	ReplicationPolicy = EGameplayAbilityReplicationPolicy::ReplicateNo;
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
+	NetSecurityPolicy = EGameplayAbilityNetSecurityPolicy::ClientOrServer;
+
+	ActivationPolicy = EPrototypeAbilityActivationPolicy::OnInputTriggered;
+	
+
+
+}
+
 void UGameplayAbilityBase::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
 	Super::OnGiveAbility(ActorInfo, Spec);

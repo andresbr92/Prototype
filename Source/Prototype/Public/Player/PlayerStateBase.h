@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "PlayerStateBase.generated.h"
 
+class UCustomAbilitySystemComponent;
 class UAttributeSet;
 /**
  * 
@@ -19,6 +20,7 @@ public:
 	APlayerStateBase();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; };
+	virtual UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category= "Ability System")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

@@ -19,3 +19,8 @@ UAbilitySystemComponent* APlayerStateBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }
+
+UCustomAbilitySystemComponent* APlayerStateBase::GetCustomAbilitySystemComponent() const
+{
+	return CastChecked<UCustomAbilitySystemComponent>(AbilitySystemComponent, ECastCheckedType::NullAllowed);
+}

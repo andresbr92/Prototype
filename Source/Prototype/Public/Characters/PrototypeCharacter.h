@@ -9,6 +9,7 @@
 #include "Logging/LogMacros.h"
 #include "PrototypeCharacter.generated.h"
 
+class UPrototypeAbilitySet;
 class AItemBase;
 class UInputActionToGameplayTag;
 class APlayerStateBase;
@@ -76,8 +77,9 @@ protected:
 	virtual void InitializeAttributes() override;
 	virtual void GrantDefaultAbilities();
 	
-	UPROPERTY(EditAnywhere, Category= "Default Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+	// UPROPERTY(EditAnywhere, Category= "Default Abilities")
+	// TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+	
 
 
 public:
@@ -88,6 +90,8 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly, Category= "Input")
 	TObjectPtr<UInputActionToGameplayTag> InputActionToGameplayTag;
+	UPROPERTY(EditDefaultsOnly, Category= "GAS Default Abilities")
+	TObjectPtr<UPrototypeAbilitySet> AbilitySet;
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
 	void AbilityInputTagReleased(FGameplayTag GameplayTag);
 	void AbilityInputTagHeld(FGameplayTag GameplayTag);

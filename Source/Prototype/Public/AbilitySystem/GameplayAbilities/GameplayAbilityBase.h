@@ -25,11 +25,15 @@ UCLASS()
 class PROTOTYPE_API UGameplayAbilityBase : public UGameplayAbility
 {
 	GENERATED_BODY()
+public:
+	UGameplayAbilityBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	FGameplayTag AbilityTag;
+	EPrototypeAbilityActivationPolicy GetActivationPolicy() const { return ActivationPolicy; }
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Prototype |Ability Activation")
 	EPrototypeAbilityActivationPolicy ActivationPolicy;
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
 	

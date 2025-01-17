@@ -38,14 +38,14 @@ void AItemBase::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 void AItemBase::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	APrototypeCharacter* Character = Cast<APrototypeCharacter>(OtherActor);
-	if (!Character) return;
-	Character->SetOverlappingItem(nullptr);
-	UCustomAbilitySystemComponent* AbilitySystemComponent = Character->GetCustomAbilitySystemComponent();
-	if (AbilitySystemComponent)
-	{
-		AbilitySystemComponent->ClearInteractionAbility();
-	}
+	// APrototypeCharacter* Character = Cast<APrototypeCharacter>(OtherActor);
+	// if (!Character) return;
+	// Character->SetOverlappingItem(nullptr);
+	// UCustomAbilitySystemComponent* AbilitySystemComponent = Character->GetCustomAbilitySystemComponent();
+	// if (AbilitySystemComponent)
+	// {
+	// 	AbilitySystemComponent->ClearInteractionAbility();
+	// }
 }
 
 // Called when the game starts or when spawned

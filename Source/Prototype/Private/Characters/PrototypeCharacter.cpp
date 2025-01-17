@@ -11,6 +11,7 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "AbilitySystem/PrototypeAbilitySet.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "Input/CustomInputComponent.h"
 #include "Player/PlayerStateBase.h"
@@ -65,6 +66,7 @@ void APrototypeCharacter::InitializeAbilitySystem()
 		AbilitySystemComponent = Cast<UCustomAbilitySystemComponent>(ASC);
 		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateBase, this);
 		
+		
 	}
 }
 
@@ -75,14 +77,19 @@ void APrototypeCharacter::InitializeAttributes()
 
 void APrototypeCharacter::GrantDefaultAbilities()
 {
-	if (!DefaultAbilities.IsEmpty())
+	// if (!DefaultAbilities.IsEmpty())
+	// {
+	// 	AbilitySystemComponent->GrantDefaultAbilities(DefaultAbilities);
+	// }
+	if (AbilitySet)
 	{
-		AbilitySystemComponent->GrantDefaultAbilities(DefaultAbilities);
+		AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr);
 	}
 }
 
 void APrototypeCharacter::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
+	
 	AbilitySystemComponent->AbilityInputTagPressed(GameplayTag);	
 }
 

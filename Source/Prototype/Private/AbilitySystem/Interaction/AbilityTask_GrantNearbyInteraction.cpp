@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 
 #include "TimerManager.h"
+#include "AbilitySystem/GameplayAbilities/GameplayAbilityBase.h"
 #include "AbilitySystem/Interaction/IInteractableTarget.h"
 #include "AbilitySystem/Interaction/InteractionQuery.h"
 #include "AbilitySystem/Interaction/InteractionStatics.h"
@@ -40,11 +41,7 @@ void UAbilityTask_GrantNearbyInteraction::OnGameplayTaskActivated(UGameplayTask&
 UAbilityTask_GrantNearbyInteraction* UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility,
                                                                                                              float InteractionScanRange, float InteractionScanRate)
 {
-	// print something to the screen
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors"));
-	}
+
 	UAbilityTask_GrantNearbyInteraction* MyObj = NewAbilityTask<UAbilityTask_GrantNearbyInteraction>(OwningAbility);
 	MyObj->InteractionScanRange = InteractionScanRange;
 	MyObj->InteractionScanRate = InteractionScanRate;
@@ -94,8 +91,11 @@ void UAbilityTask_GrantNearbyInteraction::QueryInteractables()
 					if (!InteractionAbilityCache.Find(ObjectKey))
 					{
 						FGameplayAbilitySpec Spec(Option.InteractionAbilityToGrant, 1, INDEX_NONE, this);
+						UGameplayAbilityBase* AbilityBase = Cast<UGameplayAbilityBase>(Spec.Ability);
+						Spec.GetDynamicSpecSourceTags().AddTag(AbilityBase->AbilityTag);
 						FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(Spec);
 						InteractionAbilityCache.Add(ObjectKey, Handle);
+						
 					}
 				}
 			}

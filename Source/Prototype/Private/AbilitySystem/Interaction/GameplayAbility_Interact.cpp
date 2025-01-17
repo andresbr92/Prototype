@@ -9,7 +9,7 @@
 #include "AbilitySystem/Interaction/InteractionStatics.h"
 #include "NativeGameplayTags.h"
 #include "AbilitySystem/Interaction/IInteractableTarget.h"
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Input.InputTag_E");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Ability.Interaction.Activate");
 UGameplayAbility_Interact::UGameplayAbility_Interact(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -27,7 +27,7 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 	UCustomAbilitySystemComponent* CustomAbilitySystemComponent = Cast<UCustomAbilitySystemComponent>(AbilitySystem);
 	if (CustomAbilitySystemComponent && CustomAbilitySystemComponent->GetOwnerRole() == ROLE_Authority)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("activating ability only on server"));
+		
 		UAbilityTask_GrantNearbyInteraction* Task = UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(this, InteractionScanRange, InteractionScanRate);
 		Task->ReadyForActivation();
 		
@@ -36,6 +36,12 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 
 void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions)
 {
+	// print options
+	for (const FInteractionOption& InteractionOption : InteractiveOptions)
+	{
+		// print something
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Interaction Option"));
+	}
 
 	// Verifica si la habilidad tiene información de contexto válida
 	if (CurrentActorInfo && CurrentActorInfo->PlayerController.IsValid())
@@ -75,6 +81,7 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 		// Mensaje de advertencia si no se encuentra un PlayerController válido
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No se encontró un PlayerController válido para actualizar interacciones."));
 	}
+	CurrentOptions = InteractiveOptions;
 }
 
 void UGameplayAbility_Interact::TriggerInteraction()
