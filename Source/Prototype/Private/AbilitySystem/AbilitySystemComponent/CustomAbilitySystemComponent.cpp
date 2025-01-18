@@ -78,7 +78,7 @@ void UCustomAbilitySystemComponent::ProcessAbilityInput(float DeltaTime, bool bG
 
 				if (AbilitySpec->IsActive())
 				{
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Purple, AbilitySpec->Ability->GetName());
+					
 					
 					// Ability is active so pass along the input event.
 					AbilitySpecInputPressed(*AbilitySpec);
@@ -154,10 +154,7 @@ void UCustomAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& 
 	}
 }
 
-void UCustomAbilitySystemComponent::EquipAbility()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("EquipAbility"));
-}
+
 
 void UCustomAbilitySystemComponent::GrantInteractionAbility(const TSubclassOf<UGameplayAbilityBase>& InteractionAbility)
 {
@@ -209,13 +206,7 @@ void UCustomAbilitySystemComponent::AbilitySpecInputReleased(FGameplayAbilitySpe
 	}
 }
 
-void UCustomAbilitySystemComponent::PrintAbilities()
-{
-	for (const FGameplayAbilitySpec& AbilitySpec : ActivatableAbilities.Items)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, AbilitySpec.Ability->GetName());
-	}
-}
+
 
 
 

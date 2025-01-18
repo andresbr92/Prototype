@@ -47,10 +47,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	// Handles to abilities that have their input held.
 	TArray<FGameplayAbilitySpecHandle> InputHeldSpecHandles;
-	// activatable abilities
-	
-	void PrintAbilities();
 	
 	
-	
+
 };

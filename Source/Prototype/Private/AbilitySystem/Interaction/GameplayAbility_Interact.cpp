@@ -40,7 +40,7 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 	for (const FInteractionOption& InteractionOption : InteractiveOptions)
 	{
 		// print something
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Interaction Option"));
+		// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Interaction Option"));
 	}
 
 	// Verifica si la habilidad tiene información de contexto válida
@@ -64,12 +64,12 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 			{
 				// Muestra un mensaje con el nombre del actor interactuable
 				FString ActorName = InteractableTargetActor->GetName();
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Objeto interactuable detectado: %s"), *ActorName));
+				// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Objeto interactuable detectado: %s"), *ActorName));
 			}
 			else
 			{
 				// Mensaje de error si no se puede obtener el actor
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No se pudo obtener el actor interactuable."));
+				// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No se pudo obtener el actor interactuable."));
 			}
 		}
 
@@ -79,14 +79,14 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOpti
 	else
 	{
 		// Mensaje de advertencia si no se encuentra un PlayerController válido
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No se encontró un PlayerController válido para actualizar interacciones."));
+		// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No se encontró un PlayerController válido para actualizar interacciones."));
 	}
 	CurrentOptions = InteractiveOptions;
 }
 
 void UGameplayAbility_Interact::TriggerInteraction()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Triggering ability"));
+	
 	if (CurrentOptions.Num() == 0)
 	{
 		return;

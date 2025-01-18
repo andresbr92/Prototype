@@ -12,7 +12,6 @@ UGameplayAbilityBase::UGameplayAbilityBase(const FObjectInitializer& ObjectIniti
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	NetSecurityPolicy = EGameplayAbilityNetSecurityPolicy::ClientOrServer;
-
 	ActivationPolicy = EPrototypeAbilityActivationPolicy::OnInputTriggered;
 	
 

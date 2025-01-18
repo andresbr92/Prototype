@@ -32,10 +32,7 @@ void UAbilityTask_GrantNearbyInteraction::Activate()
 void UAbilityTask_GrantNearbyInteraction::OnGameplayTaskActivated(UGameplayTask& Task)
 {
 	Super::OnGameplayTaskActivated(Task);
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("UAbilityTask_GrantNearbyInteraction::OnGameplayTaskActivated"));
-	}
+	
 }
 
 UAbilityTask_GrantNearbyInteraction* UAbilityTask_GrantNearbyInteraction::GrantAbilitiesForNearbyInteractors(UGameplayAbility* OwningAbility,

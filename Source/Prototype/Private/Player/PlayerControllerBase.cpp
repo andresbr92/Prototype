@@ -26,12 +26,31 @@ void APlayerControllerBase::PreProcessInput(const float DeltaTime, const bool bG
 
 void APlayerControllerBase::PostProcessInput(const float DeltaTime, const bool bGamePaused)
 {
-	UCustomAbilitySystemComponent* CustomASC = GetPlayerStateBase()->GetCustomAbilitySystemComponent();
-	if (CustomASC)
-	{
+	
+	
 		
-		CustomASC->ProcessAbilityInput(DeltaTime, bGamePaused);
-	}
+		if (UCustomAbilitySystemComponent* CustomASC = GetCustomAbilitySystemComponent())
+		{
+		
+			CustomASC->ProcessAbilityInput(DeltaTime, bGamePaused);
+		}
+		
+	
+	
 	Super::PostProcessInput(DeltaTime, bGamePaused);
 	
 }
+
+
+
+UCustomAbilitySystemComponent* APlayerControllerBase::GetCustomAbilitySystemComponent() const
+{
+	const APlayerStateBase* PSBase = GetPlayerStateBase();
+	return PSBase ? PSBase->GetCustomAbilitySystemComponent() : nullptr;
+	
+	
+}
+
+
+
+
