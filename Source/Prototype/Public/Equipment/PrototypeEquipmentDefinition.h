@@ -46,11 +46,17 @@ struct FPTEquipmentActorToSpawn
 	FTransform AttachTransform;
 	
 };
+/**
+ * UPrototypeEquipmentDefinition
+ *
+ * Definition of a piece of equipment that can be applied to a pawn
+ */
 
 UCLASS(Blueprintable, Const, Abstract, BlueprintType)
 class PROTOTYPE_API UPrototypeEquipmentDefinition : public UObject
 {
 	GENERATED_BODY()
+public:
 	UPrototypeEquipmentDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 	UPROPERTY(editdefaultsonly, Category = "Equipment")

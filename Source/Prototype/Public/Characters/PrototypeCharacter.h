@@ -77,6 +77,7 @@ protected:
 	virtual void InitializeAttributes() override;
 	virtual void GrantDefaultAbilities();
 	
+	
 	// UPROPERTY(EditAnywhere, Category= "Default Abilities")
 	// TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 	

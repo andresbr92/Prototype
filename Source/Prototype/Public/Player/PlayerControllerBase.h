@@ -30,6 +30,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Prototype|PlayerController")
 	UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
+	
 
 private:
 	TObjectPtr<APlayerStateBase> PlayerStateBase;

@@ -13,6 +13,7 @@
 #include "InputActionValue.h"
 #include "AbilitySystem/PrototypeAbilitySet.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
+#include "Equipment/PrototypeEquipmentManagerComponent.h"
 #include "Input/CustomInputComponent.h"
 #include "Player/PlayerStateBase.h"
 
@@ -111,6 +112,7 @@ void APrototypeCharacter::PossessedBy(AController* NewController)
 	InitializeAbilitySystem();
 	InitializeAttributes();
 	GrantDefaultAbilities();
+
 }
 
 void APrototypeCharacter::OnRep_PlayerState()
