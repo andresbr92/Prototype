@@ -90,19 +90,19 @@ UPTInventoryItemInstance* FPTInventoryList::AddEntry(TSubclassOf<UPTInventoryIte
 
 	FPTInventoryEntry& NewEntry = Entries.AddDefaulted_GetRef();
 	NewEntry.Instance = NewObject<UPTInventoryItemInstance>(OwnerComponent->GetOwner());  //@TODO: Using the actor instead of component as the outer due to UE-127172
-	// NewEntry.Instance->SetItemDef(ItemDef);
-	// for (ULyraInventoryItemFragment* Fragment : GetDefault<UPTInventoryItemDefinition>(ItemDef)->Fragments)
-	// {
-	// 	if (Fragment != nullptr)
-	// 	{
-	// 		Fragment->OnInstanceCreated(NewEntry.Instance);
-	// 	}
-	// }
-	// NewEntry.StackCount = StackCount;
-	// Result = NewEntry.Instance;
-	//
-	// //const UPTInventoryItemDefinition* ItemCDO = GetDefault<UPTInventoryItemDefinition>(ItemDef);
-	// MarkItemDirty(NewEntry);
+	NewEntry.Instance->SetItemDef(ItemDef);
+	for (UPTInventoryItemFragment* Fragment : GetDefault<UPTInventoryItemDefinition>(ItemDef)->Fragments)
+	{
+		if (Fragment != nullptr)
+		{
+			Fragment->OnInstanceCreated(NewEntry.Instance);
+		}
+	}
+	NewEntry.StackCount = StackCount;
+	Result = NewEntry.Instance;
+	
+	//const UPTInventoryItemDefinition* ItemCDO = GetDefault<UPTInventoryItemDefinition>(ItemDef);
+	MarkItemDirty(NewEntry);
 
 	return Result;
 }

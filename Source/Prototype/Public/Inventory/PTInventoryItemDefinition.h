@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "PTInventoryItemDefinition.generated.h"
 
 /**
@@ -36,8 +37,10 @@ class UPTInventoryItemDefinition : public UObject
 public:
 
 	UPTInventoryItemDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Display)
 	FText DisplayName;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Display, Instanced)
 	TArray<TObjectPtr<UPTInventoryItemFragment>> Fragments;
 

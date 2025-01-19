@@ -56,9 +56,23 @@ public:
 	{
 		return FFastArraySerializer::FastArrayDeltaSerialize<FPTInventoryEntry, FPTInventoryList>(Entries, DeltaParms, *this);
 	}
+	/**
+	 * Create a new inventory entry with the specified item definition and stack count.
+	 *
+	 * @param ItemClass The class of the inventory item to add.
+	 * @param StackCount The number of stacks for the new inventory item.
+	 * @return A pointer to the newly created inventory item instance.
+	 */
 	UPTInventoryItemInstance* AddEntry(TSubclassOf<UPTInventoryItemDefinition> ItemClass, int32 StackCount);
+	/**
+	 * This function is intended to handle adding an already existing ULyraInventoryItemInstance directly to the inventory.
+	 * Not implemented yet.
+	 * @param ItemInstance The inventory item instance to add.
+	 */
 	void AddEntry(UPTInventoryItemInstance* ItemInstance);
+	
 	void RemoveEntry(UPTInventoryItemInstance* ItemInstance);
+	
 private:
 	void BroadcastChangeMessage(FPTInventoryEntry& Entry, int32 NewCount, int32 OldCount);
 	
