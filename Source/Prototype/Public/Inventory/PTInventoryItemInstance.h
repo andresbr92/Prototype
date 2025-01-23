@@ -11,6 +11,7 @@
 #include "PTInventoryItemInstance.generated.h"
 
 
+class UPTInventoryItemFragment;
 class UPTInventoryItemDefinition;
 /**
  * 
@@ -49,8 +50,8 @@ class PROTOTYPE_API UPTInventoryItemInstance : public UObject
 	// {
 	// 	return ItemDef;
 	// }
-	// UFUNCTION(BlueprintCallable, BlueprintPure=false, meta=(DeterminesOutputType=FragmentClass))
-	// const UPTInventoryItemFragment* FindFragmentByClass(TSubclassOf<UPTInventoryItemFragment> FragmentClass) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure=false, meta=(DeterminesOutputType=FragmentClass))
+	const UPTInventoryItemFragment* FindFragmentByClass(TSubclassOf<UPTInventoryItemFragment> FragmentClass) const;
 	
 // 	template <typename ResultClass>
 // const ResultClass* FindFragmentByClass() const

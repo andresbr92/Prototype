@@ -41,6 +41,10 @@
 		{
 			"Name": "LudusAI",
 			"Enabled": false
+		},
+		{
+			"Name": "ReplicationGraph",
+			"Enabled": true
 		}
 	]
 }

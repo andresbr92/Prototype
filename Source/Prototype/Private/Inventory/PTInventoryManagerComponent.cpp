@@ -287,15 +287,15 @@ bool UPTInventoryManagerComponent::ReplicateSubobjects(UActorChannel* Channel, c
 {
 	bool WroteSomething = Super::ReplicateSubobjects(Channel, Bunch, RepFlags);
 
-	for (FPTInventoryEntry& Entry : InventoryList.Entries)
-	{
-		UPTInventoryItemInstance* Instance = Entry.Instance;
-
-		if (Instance && IsValid(Instance))
-		{
-			WroteSomething |= Channel->ReplicateSubobject(Instance, *Bunch, *RepFlags);
-		}
-	}
+	// for (FPTInventoryEntry& Entry : InventoryList.Entries)
+	// {
+	// 	UPTInventoryItemInstance* Instance = Entry.Instance;
+	//
+	// 	if (Instance && IsValid(Instance))
+	// 	{
+	// 		WroteSomething |= Channel->ReplicateSubobject(Instance, *Bunch, *RepFlags);
+	// 	}
+	// }
 
 	return WroteSomething;
 }

@@ -14,6 +14,18 @@ UPTInventoryItemInstance::UPTInventoryItemInstance(const FObjectInitializer& Obj
 : Super(ObjectInitializer)
 {
 }
+
+const UPTInventoryItemFragment* UPTInventoryItemInstance::FindFragmentByClass(
+	TSubclassOf<UPTInventoryItemFragment> FragmentClass) const
+{
+	if ((ItemDef != nullptr) && (FragmentClass != nullptr))
+	{
+		return GetDefault<UPTInventoryItemDefinition>(ItemDef)->FindFragmentByClass(FragmentClass);
+	}
+
+	return nullptr;
+}
+
 void UPTInventoryItemInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

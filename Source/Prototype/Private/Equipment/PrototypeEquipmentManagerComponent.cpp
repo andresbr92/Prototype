@@ -59,6 +59,24 @@ UCustomAbilitySystemComponent* FPTEquipmentList::GetCustomAbilitySystemComponent
 	AActor* OwningActor = OwnerComponent->GetOwner();
 	return Cast<UCustomAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(OwningActor));
 }
+UPrototypeEquipmentInstance* UPrototypeEquipmentManagerComponent::EquipItem(TSubclassOf<UPrototypeEquipmentDefinition> EquipmentClass)
+{
+	UPrototypeEquipmentInstance* Result = nullptr;
+	if (EquipmentClass != nullptr)
+	{
+		Result = EquipmentList.AddEntry(EquipmentClass);
+		if (Result != nullptr)
+		{
+			Result->OnEquipped();
+
+			if (IsUsingRegisteredSubObjectList() && IsReadyForReplication())
+			{
+				AddReplicatedSubObject(Result);
+			}
+		}
+	}
+	return Result;
+}
 
 UPrototypeEquipmentInstance* FPTEquipmentList::AddEntry(TSubclassOf<UPrototypeEquipmentDefinition> EquipmentDefinition)
 {
@@ -67,6 +85,13 @@ UPrototypeEquipmentInstance* FPTEquipmentList::AddEntry(TSubclassOf<UPrototypeEq
 	check(EquipmentDefinition != nullptr);
  	check(OwnerComponent);
 	check(OwnerComponent->GetOwner()->HasAuthority());
+	// 	LogTemp:   EquipmentDefinition: ED_Sword_C
+	// LogTemp:   OwnerComponent: PrototypeEquipmentManager
+	// LogTemp:   OwnerComponent's Owner: BP_PrototypeCharacter_C_0
+	// LogTemp:   NewEntry.Instance (Newly Created): PrototypeEquipmentInstance_0
+	UE_LOG(LogTemp, Log, TEXT("  EquipmentDefinition: %s"), *GetNameSafe(EquipmentDefinition));
+	UE_LOG(LogTemp, Log, TEXT("  OwnerComponent: %s"), *GetNameSafe(OwnerComponent));
+	UE_LOG(LogTemp, Log, TEXT("  OwnerComponent's Owner: %s"), *GetNameSafe(OwnerComponent->GetOwner()));
 	
 	const UPrototypeEquipmentDefinition* EquipmentCDO = GetDefault<UPrototypeEquipmentDefinition>(EquipmentDefinition);
 
@@ -75,11 +100,13 @@ UPrototypeEquipmentInstance* FPTEquipmentList::AddEntry(TSubclassOf<UPrototypeEq
 	{
 		InstanceType = UPrototypeEquipmentInstance::StaticClass();
 	}
+
 	
 	FPTAppliedEquipmentEntry& NewEntry = Entries.AddDefaulted_GetRef();
 	NewEntry.EquipmentDefinition = EquipmentDefinition;
-	NewEntry.Instance = NewObject<UPrototypeEquipmentInstance>(OwnerComponent->GetOwner(), InstanceType);  //@TODO: Using the actor instead of component as the outer due to UE-127172
+	NewEntry.Instance = NewObject<UPrototypeEquipmentInstance>(OwnerComponent->GetOwner(), InstanceType); //@TODO: Using the actor instead of component as the outer due to UE-127172
 	Result = NewEntry.Instance;
+	UE_LOG(LogTemp, Log, TEXT("  NewEntry.Instance (Newly Created): %s"), *GetNameSafe(NewEntry.Instance));
 
 	if (UCustomAbilitySystemComponent* ASC = GetCustomAbilitySystemComponent())
 	{
@@ -140,24 +167,7 @@ void UPrototypeEquipmentManagerComponent::GetLifetimeReplicatedProps(TArray< FLi
 	DOREPLIFETIME(ThisClass, EquipmentList);
 }
 
-UPrototypeEquipmentInstance* UPrototypeEquipmentManagerComponent::EquipItem(TSubclassOf<UPrototypeEquipmentDefinition> EquipmentClass)
-{
-	UPrototypeEquipmentInstance* Result = nullptr;
-	if (EquipmentClass != nullptr)
-	{
-		Result = EquipmentList.AddEntry(EquipmentClass);
-		if (Result != nullptr)
-		{
-			Result->OnEquipped();
 
-			if (IsUsingRegisteredSubObjectList() && IsReadyForReplication())
-			{
-				AddReplicatedSubObject(Result);
-			}
-		}
-	}
-	return Result;
-}
 
 void UPrototypeEquipmentManagerComponent::UnequipItem(UPrototypeEquipmentInstance* ItemInstance)
 {
