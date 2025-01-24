@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "PlayerControllerBase.generated.h"
 
+class UPrototypeQuickBarComponent;
 class UCustomAbilitySystemComponent;
 class APlayerStateBase;
 class UPTInventoryManagerComponent;
@@ -21,6 +22,8 @@ class PROTOTYPE_API APlayerControllerBase : public APlayerController
 public:
 	UPROPERTY(EditDefaultsOnly, Category="Inventory")
 	TObjectPtr<UPTInventoryManagerComponent> InventoryManagerComponent;
+	UPROPERTY(EditDefaultsOnly, Category="Equipment")
+	TObjectPtr<UPrototypeQuickBarComponent> QuickBarComponent;
 	
 	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;
 	virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;

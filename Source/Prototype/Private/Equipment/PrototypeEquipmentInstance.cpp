@@ -33,18 +33,20 @@ void UPrototypeEquipmentInstance::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ThisClass, Instigator);
+	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::GetLifetimeReplicatedProps called! Instigator will be replicated"));
 	DOREPLIFETIME(ThisClass, SpawnedActors);
+	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::GetLifetimeReplicatedProps called! SpawnedActors will be replicated"));
 }
 
-// #if UE_WITH_IRIS
-// void UPrototypeEquipmentInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
-// {
-// 	using namespace UE::Net;
-//
-// 	// Build descriptors and allocate PropertyReplicationFragments for this object
-// 	FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
-// }
-// #endif // UE_WITH_IRIS
+#if UE_WITH_IRIS
+void UPrototypeEquipmentInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
+{
+	using namespace UE::Net;
+	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::RegisterReplicationFragments called!"));
+	// Build descriptors and allocate PropertyReplicationFragments for this object
+	FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
+}
+#endif // UE_WITH_IRIS
 
 APawn* UPrototypeEquipmentInstance::GetPawn() const
 {
@@ -80,6 +82,7 @@ void UPrototypeEquipmentInstance::SpawnEquipmentActors(const TArray<FPTEquipment
 			NewActor->AttachToComponent(AttachTarget, FAttachmentTransformRules::KeepRelativeTransform, SpawnInfo.AttachSocket);
 
 			SpawnedActors.Add(NewActor);
+			UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::SpawnEquipmentActors Created Actor: %s"), *GetNameSafe(NewActor));
 		}
 	}
 }
@@ -105,4 +108,5 @@ void UPrototypeEquipmentInstance::OnUnequipped()
 
 void UPrototypeEquipmentInstance::OnRep_Instigator()
 {
+	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::OnRep_Instigator called! Instigator Updated %s"), *GetNameSafe(Instigator));
 }

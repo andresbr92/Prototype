@@ -26,6 +26,7 @@ private:
 	
 	UPROPERTY()
 	int32 StackCount = 0;
+	
 	UPROPERTY(NotReplicated)
 	int32 LastObservedCount = INDEX_NONE;
 	
@@ -74,14 +75,14 @@ public:
 	void RemoveEntry(UPTInventoryItemInstance* ItemInstance);
 	
 private:
-	void BroadcastChangeMessage(FPTInventoryEntry& Entry, int32 NewCount, int32 OldCount);
+	void BroadcastChangeMessage(FPTInventoryEntry& Entry, int32 OldCount, int32 NewCount);
 	
 	friend UPTInventoryManagerComponent;
 
 private:
 	UPROPERTY()
 	TObjectPtr<UActorComponent> OwnerComponent;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TArray<FPTInventoryEntry> Entries;
 	
 	
@@ -130,7 +131,7 @@ public:
 
 	
 private:
-	UPROPERTY(Replicated)
+	UPROPERTY(Replicated, VisibleAnywhere)
 	FPTInventoryList InventoryList;
 	
 	

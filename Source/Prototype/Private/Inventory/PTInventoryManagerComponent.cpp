@@ -25,7 +25,7 @@ FString FPTInventoryEntry::GetDebugString() const
 	TSubclassOf<UPTInventoryItemDefinition> ItemDef;
 	if (Instance != nullptr)
 	{
-		// ItemDef = Instance->GetItemDef();
+		ItemDef = Instance->GetItemDef();
 	}
 
 	return FString::Printf(TEXT("%s (%d x %s)"), *GetNameSafe(Instance), StackCount, *GetNameSafe(ItemDef));
@@ -209,10 +209,10 @@ UPTInventoryItemInstance* UPTInventoryManagerComponent::FindFirstItemStackByDefi
 
 		if (IsValid(Instance))
 		{
-			// if (Instance->GetItemDef() == ItemDef)
-			// {
-			// 	return Instance;
-			// }
+			if (Instance->GetItemDef() == ItemDef)
+			{
+				return Instance;
+			}
 		}
 	}
 
@@ -228,10 +228,10 @@ int32 UPTInventoryManagerComponent::GetTotalItemCountByDefinition(TSubclassOf<UP
 
 		if (IsValid(Instance))
 		{
-			// if (Instance->GetItemDef() == ItemDef)
-			// {
-			// 	++TotalCount;
-			// }
+			if (Instance->GetItemDef() == ItemDef)
+			{
+				++TotalCount;
+			}
 		}
 	}
 
@@ -287,15 +287,15 @@ bool UPTInventoryManagerComponent::ReplicateSubobjects(UActorChannel* Channel, c
 {
 	bool WroteSomething = Super::ReplicateSubobjects(Channel, Bunch, RepFlags);
 
-	// for (FPTInventoryEntry& Entry : InventoryList.Entries)
-	// {
-	// 	UPTInventoryItemInstance* Instance = Entry.Instance;
-	//
-	// 	if (Instance && IsValid(Instance))
-	// 	{
-	// 		WroteSomething |= Channel->ReplicateSubobject(Instance, *Bunch, *RepFlags);
-	// 	}
-	// }
+	for (FPTInventoryEntry& Entry : InventoryList.Entries)
+	{
+		UPTInventoryItemInstance* Instance = Entry.Instance;
+	
+		if (Instance && IsValid(Instance))
+		{
+			WroteSomething |= Channel->ReplicateSubobject(Instance, *Bunch, *RepFlags);
+		}
+	}
 
 	return WroteSomething;
 }

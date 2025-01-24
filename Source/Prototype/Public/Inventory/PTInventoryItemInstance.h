@@ -7,10 +7,9 @@
 
 
 #include "Templates/SubclassOf.h"
-#include "Net/UnrealNetwork.h"
 #include "PTInventoryItemInstance.generated.h"
 
-
+class FLifetimeProperty;
 class UPTInventoryItemFragment;
 class UPTInventoryItemDefinition;
 /**
@@ -25,6 +24,7 @@ UCLASS()
 class PROTOTYPE_API UPTInventoryItemInstance : public UObject
 {
 	GENERATED_BODY()
+public:
 	UPTInventoryItemInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// //~UObject interface
@@ -46,23 +46,23 @@ class PROTOTYPE_API UPTInventoryItemInstance : public UObject
 	// UFUNCTION(BlueprintCallable, Category=Inventory)
 	// bool HasStatTag(FGameplayTag Tag) const;
 
-	// TSubclassOf<UPTInventoryItemDefinition> GetItemDef() const
-	// {
-	// 	return ItemDef;
-	// }
+	TSubclassOf<UPTInventoryItemDefinition> GetItemDef() const
+	{
+		return ItemDef;
+	}
 	UFUNCTION(BlueprintCallable, BlueprintPure=false, meta=(DeterminesOutputType=FragmentClass))
 	const UPTInventoryItemFragment* FindFragmentByClass(TSubclassOf<UPTInventoryItemFragment> FragmentClass) const;
 	
-// 	template <typename ResultClass>
-// const ResultClass* FindFragmentByClass() const
-// 	{
-// 		return (ResultClass*)FindFragmentByClass(ResultClass::StaticClass());
-// 	}
+	template <typename ResultClass>
+const ResultClass* FindFragmentByClass() const
+	{
+		return (ResultClass*)FindFragmentByClass(ResultClass::StaticClass());
+	}
 private:
-// #if UE_WITH_IRIS
-// 	/** Register all replication fragments */
-// 	virtual void RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags) override;
-// #endif // UE_WITH_IRIS
+#if UE_WITH_IRIS
+	/** Register all replication fragments */
+	virtual void RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags) override;
+#endif // UE_WITH_IRIS
 	void SetItemDef(TSubclassOf<UPTInventoryItemDefinition> InDef);
 	
 	friend struct FPTInventoryList;

@@ -15,16 +15,7 @@ UPTInventoryItemInstance::UPTInventoryItemInstance(const FObjectInitializer& Obj
 {
 }
 
-const UPTInventoryItemFragment* UPTInventoryItemInstance::FindFragmentByClass(
-	TSubclassOf<UPTInventoryItemFragment> FragmentClass) const
-{
-	if ((ItemDef != nullptr) && (FragmentClass != nullptr))
-	{
-		return GetDefault<UPTInventoryItemDefinition>(ItemDef)->FindFragmentByClass(FragmentClass);
-	}
 
-	return nullptr;
-}
 
 void UPTInventoryItemInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -38,12 +29,23 @@ void UPTInventoryItemInstance::SetItemDef(TSubclassOf<UPTInventoryItemDefinition
 {
 	ItemDef = InDef;
 }
-// #if UE_WITH_IRIS
-// void UPTInventoryItemInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
-// {
-// 	using namespace UE::Net;
-//
-// 	// Build descriptors and allocate PropertyReplicationFragments for this object
-// 	FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
-// }
-// #endif // UE_WITH_IRIS
+#if UE_WITH_IRIS
+void UPTInventoryItemInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
+{
+	using namespace UE::Net;
+
+	// Build descriptors and allocate PropertyReplicationFragments for this object
+	FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
+}
+#endif // UE_WITH_IRIS
+
+const UPTInventoryItemFragment* UPTInventoryItemInstance::FindFragmentByClass(
+	TSubclassOf<UPTInventoryItemFragment> FragmentClass) const
+{
+	if ((ItemDef != nullptr) && (FragmentClass != nullptr))
+	{
+		return GetDefault<UPTInventoryItemDefinition>(ItemDef)->FindFragmentByClass(FragmentClass);
+	}
+
+	return nullptr;
+}

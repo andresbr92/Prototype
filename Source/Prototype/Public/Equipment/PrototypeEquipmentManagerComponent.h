@@ -8,6 +8,7 @@
 #include "Net/Serialization/FastArraySerializer.h"
 #include "PrototypeEquipmentManagerComponent.generated.h"
 
+struct FPTEquipmentList;
 class UActorComponent;
 class UPrototypeEquipmentInstance;
 class UPrototypeEquipmentDefinition;
@@ -39,6 +40,7 @@ private:
 	TObjectPtr<UPrototypeEquipmentInstance> Instance;
 
 	// Authority-only list of grante handles
+	UPROPERTY(NotReplicated)
 	FPrototypeAbilitySet_GrantedHandles GrantedHandles;
 	//
 	
@@ -57,20 +59,26 @@ struct FPTEquipmentList: public FFastArraySerializer
 	{
 	}
 public:
+	
 	//~FFastArraySerializer contract
 	void PreReplicatedRemove(const TArrayView<int32> RemovedIndices, int32 FinalSize);
 	void PostReplicatedAdd(const TArrayView<int32> AddedIndices, int32 FinalSize);
 	void PostReplicatedChange(const TArrayView<int32> ChangedIndices, int32 FinalSize);
 	//~End of FFastArraySerializer contract
+	
 	bool NetDeltaSerialize(FNetDeltaSerializeInfo& DeltaParms)
 	{
 		return FFastArraySerializer::FastArrayDeltaSerialize<FPTAppliedEquipmentEntry, FPTEquipmentList>(Entries, DeltaParms, *this);
 	}
+	
 	UPrototypeEquipmentInstance* AddEntry(TSubclassOf<UPrototypeEquipmentDefinition> EquipmentDefinition);
 	void RemoveEntry(UPrototypeEquipmentInstance* Instance);
+	
 private:
+	
 	UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
 	friend UPrototypeEquipmentManagerComponent;
+	
 private:
 	UPROPERTY()
 	TArray<FPTAppliedEquipmentEntry> Entries;
@@ -82,6 +90,7 @@ struct TStructOpsTypeTraits<FPTEquipmentList> : public TStructOpsTypeTraitsBase2
 {
 	enum { WithNetDeltaSerializer = true };
 };
+
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))

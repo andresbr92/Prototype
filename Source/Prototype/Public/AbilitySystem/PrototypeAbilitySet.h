@@ -3,13 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+
 #include "Engine/DataAsset.h"
 #include "GameplayTagContainer.h"
+#include "GameplayAbilitySpecHandle.h"
+#include "ActiveGameplayEffectHandle.h"
+
+
 #include "PrototypeAbilitySet.generated.h"
 
 class UCustomAbilitySystemComponent;
-struct FActiveGameplayEffectHandle;
-struct FGameplayAbilitySpecHandle;
+
 class UAbilitySystemComponent;
 class UGameplayAbilityBase;
 

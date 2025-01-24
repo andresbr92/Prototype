@@ -10,6 +10,8 @@
 #include "Equipment/PrototypeEquipmentInstance.h"
 #include "Net/UnrealNetwork.h"
 
+class FLifetimeProperty;
+struct FReplicationFlags;
 
 FString FPTAppliedEquipmentEntry::GetDebugString() const
 {

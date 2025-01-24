@@ -6,12 +6,14 @@
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "Characters/CharacterBase.h"
 #include "Inventory/PTInventoryManagerComponent.h"
+#include "Equipment/PrototypeQuickBarComponent.h"
 #include "Player/PlayerStateBase.h"
 
 
 APlayerControllerBase::APlayerControllerBase()
 {
 	InventoryManagerComponent = CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
+	QuickBarComponent = CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBarComponent");
 }
 
 APlayerStateBase* APlayerControllerBase::GetPlayerStateBase() const
