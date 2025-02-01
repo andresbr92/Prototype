@@ -16,10 +16,6 @@ APlayerControllerBase::APlayerControllerBase()
 	bReplicateUsingRegisteredSubObjectList = true;
 	QuickBar = CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBar");
 	InventoryManager = CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
-
-	AddReplicatedSubObject(QuickBar);
-	AddReplicatedSubObject(InventoryManager);
-
 }
 
 APlayerStateBase* APlayerControllerBase::GetPlayerStateBase() const
@@ -57,6 +53,14 @@ UCustomAbilitySystemComponent* APlayerControllerBase::GetCustomAbilitySystemComp
 	return PSBase ? PSBase->GetCustomAbilitySystemComponent() : nullptr;
 	
 	
+}
+
+void APlayerControllerBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	//
+	DOREPLIFETIME(APlayerControllerBase, QuickBar);
+	DOREPLIFETIME(APlayerControllerBase, InventoryManager);
 }
 
 

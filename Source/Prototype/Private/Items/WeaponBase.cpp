@@ -5,6 +5,7 @@
 
 AWeaponBase::AWeaponBase()
 {
+	bReplicates = true;
 }
 
 void AWeaponBase::GatherInteractionOptions(const FInteractionQuery& InteractQuery,

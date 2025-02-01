@@ -30,14 +30,17 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Prototype|PlayerController")
 	UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
+	// replication
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 
+	UPROPERTY(Replicated, VisibleAnywhere)
+	TObjectPtr<UPrototypeQuickBarComponent> QuickBar;
+	UPROPERTY(Replicated, VisibleAnywhere)
+	TObjectPtr<UPTInventoryManagerComponent> InventoryManager;
 
 protected:
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UPrototypeQuickBarComponent> QuickBar;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UPTInventoryManagerComponent> InventoryManager;
+	
 
 
 	
