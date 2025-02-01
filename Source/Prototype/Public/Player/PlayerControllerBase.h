@@ -32,6 +32,14 @@ public:
 	UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
 
 
+
+protected:
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPrototypeQuickBarComponent> QuickBar;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPTInventoryManagerComponent> InventoryManager;
+
+
 	
 
 private:

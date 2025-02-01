@@ -8,12 +8,18 @@
 #include "Inventory/PTInventoryManagerComponent.h"
 #include "Equipment/PrototypeQuickBarComponent.h"
 #include "Player/PlayerStateBase.h"
+#include "Net/UnrealNetwork.h"
 
 
 APlayerControllerBase::APlayerControllerBase()
 {
-	
-	
+	bReplicateUsingRegisteredSubObjectList = true;
+	QuickBar = CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBar");
+	InventoryManager = CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
+
+	AddReplicatedSubObject(QuickBar);
+	AddReplicatedSubObject(InventoryManager);
+
 }
 
 APlayerStateBase* APlayerControllerBase::GetPlayerStateBase() const

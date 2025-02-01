@@ -58,7 +58,7 @@ APrototypeCharacter::APrototypeCharacter()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 	
 
-	// APrototypeCharacter::InitializeEquipmentSystem();
+	EquipmentManager = CreateDefaultSubobject<UPrototypeEquipmentManagerComponent>("EquipmentManager");
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -94,19 +94,9 @@ void APrototypeCharacter::GrantDefaultAbilities()
 	}
 }
 
-void APrototypeCharacter::InitializeInventorySystem(AController* NewController)
-{
-	// if (NewController)
-	// {
-	// 	NewController->CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
-	// }
-}
 
-void APrototypeCharacter::InitializeEquipmentSystem()
-{
-	// this->CreateDefaultSubobject<UPrototypeEquipmentManagerComponent>("EquipmentManager");
-	// this->CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBar");
-}
+
+
 
 void APrototypeCharacter::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
