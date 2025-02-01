@@ -92,7 +92,7 @@ struct TStructOpsTypeTraits<FPTInventoryList> : public TStructOpsTypeTraitsBase2
 {
 	enum { WithNetDeltaSerializer = true };
 };
-UCLASS(BlueprintType)
+UCLASS(BlueprintType, meta=(BlueprintSpawnableComponent))
 class PROTOTYPE_API UPTInventoryManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -101,6 +101,7 @@ class PROTOTYPE_API UPTInventoryManagerComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UPTInventoryManagerComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category=Inventory)
 	bool CanAddItemDefinition(TSubclassOf<UPTInventoryItemDefinition> ItemDef, int32 StackCount = 1);

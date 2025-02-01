@@ -70,7 +70,13 @@ UPrototypeEquipmentInstance* UPrototypeEquipmentManagerComponent::EquipItem(TSub
 		if (Result != nullptr)
 		{
 			Result->OnEquipped();
-
+			bool bIsReadyForReplicationCustom = IsReadyForReplication();
+			UE_LOG(LogTemp, Log, TEXT("IsReadyForReplication: %hhd"), bIsReadyForReplicationCustom);
+			bool bIsUsingRegisteredSubObjectList = IsUsingRegisteredSubObjectList();
+			UE_LOG(LogTemp, Log, TEXT("IsUsingRegisteredSubObjectList: %hhd"), bIsUsingRegisteredSubObjectList);
+			// print the owner component
+			UE_LOG(LogTemp, Log, TEXT("OwnerComponent: %s"), *GetNameSafe(this->GetOwner()));
+			
 			if (IsUsingRegisteredSubObjectList() && IsReadyForReplication())
 			{
 				AddReplicatedSubObject(Result);
@@ -93,7 +99,7 @@ UPrototypeEquipmentInstance* FPTEquipmentList::AddEntry(TSubclassOf<UPrototypeEq
 	// LogTemp:   NewEntry.Instance (Newly Created): PrototypeEquipmentInstance_0
 	UE_LOG(LogTemp, Log, TEXT("  EquipmentDefinition: %s"), *GetNameSafe(EquipmentDefinition));
 	UE_LOG(LogTemp, Log, TEXT("  OwnerComponent: %s"), *GetNameSafe(OwnerComponent));
-	UE_LOG(LogTemp, Log, TEXT("  OwnerComponent's Owner: %s"), *GetNameSafe(OwnerComponent->GetOwner()));
+	UE_LOG(LogTemp, Log, TEXT("  HAS AUTHORITY: %hhd"), OwnerComponent->GetOwner()->HasAuthority());
 	
 	const UPrototypeEquipmentDefinition* EquipmentCDO = GetDefault<UPrototypeEquipmentDefinition>(EquipmentDefinition);
 
@@ -108,7 +114,7 @@ UPrototypeEquipmentInstance* FPTEquipmentList::AddEntry(TSubclassOf<UPrototypeEq
 	NewEntry.EquipmentDefinition = EquipmentDefinition;
 	NewEntry.Instance = NewObject<UPrototypeEquipmentInstance>(OwnerComponent->GetOwner(), InstanceType); //@TODO: Using the actor instead of component as the outer due to UE-127172
 	Result = NewEntry.Instance;
-	UE_LOG(LogTemp, Log, TEXT("  NewEntry.Instance (Newly Created): %s"), *GetNameSafe(NewEntry.Instance));
+	// UE_LOG(LogTemp, Log, TEXT("  NewEntry.Instance (Newly Created): %s"), *GetNameSafe(NewEntry.Instance));
 
 	if (UCustomAbilitySystemComponent* ASC = GetCustomAbilitySystemComponent())
 	{

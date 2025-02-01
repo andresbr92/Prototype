@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Equipment/PrototypeEquipmentInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Equipment/PrototypeEquipmentDefinition.h"
@@ -13,13 +12,13 @@ class FLifetimeProperty;
 class UClass;
 class USceneComponent;
 
-UPrototypeEquipmentInstance::UPrototypeEquipmentInstance(const FObjectInitializer& ObjectInitializer)
-	:Super(ObjectInitializer)
+UPrototypeEquipmentInstance::UPrototypeEquipmentInstance(const FObjectInitializer &ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 }
-UWorld* UPrototypeEquipmentInstance::GetWorld() const
+UWorld *UPrototypeEquipmentInstance::GetWorld() const
 {
-	if (APawn* OwningPawn = GetPawn())
+	if (APawn *OwningPawn = GetPawn())
 	{
 		return OwningPawn->GetWorld();
 	}
@@ -28,18 +27,18 @@ UWorld* UPrototypeEquipmentInstance::GetWorld() const
 		return nullptr;
 	}
 }
-void UPrototypeEquipmentInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void UPrototypeEquipmentInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ThisClass, Instigator);
-	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::GetLifetimeReplicatedProps called! Instigator will be replicated"));
+	
 	DOREPLIFETIME(ThisClass, SpawnedActors);
-	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::GetLifetimeReplicatedProps called! SpawnedActors will be replicated"));
+
 }
 
 #if UE_WITH_IRIS
-void UPrototypeEquipmentInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
+void UPrototypeEquipmentInstance::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext &Context, UE::Net::EFragmentRegistrationFlags RegistrationFlags)
 {
 	using namespace UE::Net;
 	UE_LOG(LogTemp, Log, TEXT("ULyraEquipmentInstance::RegisterReplicationFragments called!"));
@@ -48,14 +47,14 @@ void UPrototypeEquipmentInstance::RegisterReplicationFragments(UE::Net::FFragmen
 }
 #endif // UE_WITH_IRIS
 
-APawn* UPrototypeEquipmentInstance::GetPawn() const
+APawn *UPrototypeEquipmentInstance::GetPawn() const
 {
 	return Cast<APawn>(GetOuter());
 }
-APawn* UPrototypeEquipmentInstance::GetTypedPawn(TSubclassOf<APawn> PawnType) const
+APawn *UPrototypeEquipmentInstance::GetTypedPawn(TSubclassOf<APawn> PawnType) const
 {
-	APawn* Result = nullptr;
-	if (UClass* ActualPawnType = PawnType)
+	APawn *Result = nullptr;
+	if (UClass *ActualPawnType = PawnType)
 	{
 		if (GetOuter()->IsA(ActualPawnType))
 		{
@@ -64,20 +63,20 @@ APawn* UPrototypeEquipmentInstance::GetTypedPawn(TSubclassOf<APawn> PawnType) co
 	}
 	return Result;
 }
-void UPrototypeEquipmentInstance::SpawnEquipmentActors(const TArray<FPTEquipmentActorToSpawn>& ActorsToSpawn)
+void UPrototypeEquipmentInstance::SpawnEquipmentActors(const TArray<FPTEquipmentActorToSpawn> &ActorsToSpawn)
 {
-	if (APawn* OwningPawn = GetPawn())
+	if (APawn *OwningPawn = GetPawn())
 	{
-		USceneComponent* AttachTarget = OwningPawn->GetRootComponent();
-		if (ACharacter* Char = Cast<ACharacter>(OwningPawn))
+		USceneComponent *AttachTarget = OwningPawn->GetRootComponent();
+		if (ACharacter *Char = Cast<ACharacter>(OwningPawn))
 		{
 			AttachTarget = Char->GetMesh();
 		}
 
-		for (const FPTEquipmentActorToSpawn& SpawnInfo : ActorsToSpawn)
+		for (const FPTEquipmentActorToSpawn &SpawnInfo : ActorsToSpawn)
 		{
-			AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnInfo.ActorToSpawn, FTransform::Identity, OwningPawn);
-			NewActor->FinishSpawning(FTransform::Identity, /*bIsDefaultTransform=*/ true);
+			AActor *NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnInfo.ActorToSpawn, FTransform::Identity, OwningPawn);
+			NewActor->FinishSpawning(FTransform::Identity, /*bIsDefaultTransform=*/true);
 			NewActor->SetActorRelativeTransform(SpawnInfo.AttachTransform);
 			NewActor->AttachToComponent(AttachTarget, FAttachmentTransformRules::KeepRelativeTransform, SpawnInfo.AttachSocket);
 
@@ -88,7 +87,7 @@ void UPrototypeEquipmentInstance::SpawnEquipmentActors(const TArray<FPTEquipment
 }
 void UPrototypeEquipmentInstance::DestroyEquipmentActors()
 {
-	for (AActor* Actor : SpawnedActors)
+	for (AActor *Actor : SpawnedActors)
 	{
 		if (Actor)
 		{

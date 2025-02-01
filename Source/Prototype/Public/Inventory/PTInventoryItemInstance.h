@@ -27,9 +27,9 @@ class PROTOTYPE_API UPTInventoryItemInstance : public UObject
 public:
 	UPTInventoryItemInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-	// //~UObject interface
-	// virtual bool IsSupportedForNetworking() const override { return true; }
-	// //~End of UObject interface
+	//~UObject interface
+	virtual bool IsSupportedForNetworking() const override { return true; }
+	//~End of UObject interface
 	
 	// // Adds a specified number of stacks to the tag (does nothing if StackCount is below 1)
 	// UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category=Inventory)

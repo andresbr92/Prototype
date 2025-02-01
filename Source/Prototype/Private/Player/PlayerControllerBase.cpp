@@ -12,8 +12,8 @@
 
 APlayerControllerBase::APlayerControllerBase()
 {
-	InventoryManagerComponent = CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
-	QuickBarComponent = CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBarComponent");
+	
+	
 }
 
 APlayerStateBase* APlayerControllerBase::GetPlayerStateBase() const

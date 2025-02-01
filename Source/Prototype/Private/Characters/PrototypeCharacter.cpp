@@ -14,7 +14,9 @@
 #include "AbilitySystem/PrototypeAbilitySet.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "Equipment/PrototypeEquipmentManagerComponent.h"
+#include "Equipment/PrototypeQuickBarComponent.h"
 #include "Input/CustomInputComponent.h"
+#include "Inventory/PTInventoryManagerComponent.h"
 #include "Player/PlayerStateBase.h"
 
 
@@ -54,9 +56,13 @@ APrototypeCharacter::APrototypeCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	
+
+	// APrototypeCharacter::InitializeEquipmentSystem();
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	bReplicateUsingRegisteredSubObjectList = true;
 }
 void APrototypeCharacter::InitializeAbilitySystem()
 {
@@ -88,6 +94,20 @@ void APrototypeCharacter::GrantDefaultAbilities()
 	}
 }
 
+void APrototypeCharacter::InitializeInventorySystem(AController* NewController)
+{
+	// if (NewController)
+	// {
+	// 	NewController->CreateDefaultSubobject<UPTInventoryManagerComponent>("InventoryManager");
+	// }
+}
+
+void APrototypeCharacter::InitializeEquipmentSystem()
+{
+	// this->CreateDefaultSubobject<UPrototypeEquipmentManagerComponent>("EquipmentManager");
+	// this->CreateDefaultSubobject<UPrototypeQuickBarComponent>("QuickBar");
+}
+
 void APrototypeCharacter::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
 	
@@ -112,6 +132,7 @@ void APrototypeCharacter::PossessedBy(AController* NewController)
 	InitializeAbilitySystem();
 	InitializeAttributes();
 	GrantDefaultAbilities();
+	
 
 }
 

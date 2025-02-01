@@ -168,8 +168,9 @@ UPTInventoryItemInstance* UPTInventoryManagerComponent::AddItemDefinition(TSubcl
 	if (ItemDef != nullptr)
 	{
 		Result = InventoryList.AddEntry(ItemDef, StackCount);
-		
-		if (IsUsingRegisteredSubObjectList() && IsReadyForReplication() && Result)
+		bool bIsUsingRegistered = IsUsingRegisteredSubObjectList();
+		bool bIsReadyForReplicationBool = IsReadyForReplication();
+		if (bIsUsingRegistered && bIsReadyForReplicationBool && Result)
 		{
 			AddReplicatedSubObject(Result);
 		}
@@ -269,6 +270,9 @@ void UPTInventoryManagerComponent::ReadyForReplication()
 	Super::ReadyForReplication();
 
 	// Register existing UPTInventoryItemInstance
+	UE_LOG(LogTemp, Warning, TEXT("The boolean value is %s"), (IsUsingRegisteredSubObjectList() ? TEXT("true") : TEXT("false") ));
+	
+	UE_LOG(LogTemp, Warning, TEXT("The Actor's name is %s"), *UPTInventoryManagerComponent::GetOwner()->GetName() );
 	if (IsUsingRegisteredSubObjectList())
 	{
 		for (const FPTInventoryEntry& Entry : InventoryList.Entries)

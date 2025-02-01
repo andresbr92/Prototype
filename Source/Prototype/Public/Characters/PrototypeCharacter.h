@@ -9,6 +9,9 @@
 #include "Logging/LogMacros.h"
 #include "PrototypeCharacter.generated.h"
 
+class UPrototypeEquipmentManagerComponent;
+class UPrototypeQuickBarComponent;
+class UPTInventoryManagerComponent;
 class UPrototypeAbilitySet;
 class AItemBase;
 class UInputActionToGameplayTag;
@@ -52,52 +55,52 @@ class APrototypeCharacter : public ACharacterBase
 
 public:
 	APrototypeCharacter();
-	
-	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void PossessedBy(AController *NewController) override;
 	virtual void OnRep_PlayerState() override;
-	FORCEINLINE void SetOverlappingItem(AItemBase* Item) { OverlappingItem = Item; }
-	
-	
 
 protected:
-
 	/** Called for movement input */
-	void Move(const FInputActionValue& Value);
+	void Move(const FInputActionValue &Value);
 
 	/** Called for looking input */
-	void Look(const FInputActionValue& Value);
-
-
+	void Look(const FInputActionValue &Value);
 
 	virtual void NotifyControllerChanged() override;
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+
 	virtual void InitializeAbilitySystem();
 	virtual void InitializeAttributes() override;
 	virtual void GrantDefaultAbilities();
-	
-	
+	virtual void InitializeInventorySystem(AController *Controller);
+	virtual void InitializeEquipmentSystem();
+
 	// UPROPERTY(EditAnywhere, Category= "Default Abilities")
 	// TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
-	
-
 
 public:
 	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	FORCEINLINE class USpringArmComponent *GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE class UCameraComponent *GetFollowCamera() const { return FollowCamera; }
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Systems)
+	TObjectPtr<UPTInventoryManagerComponent> InventoryManager;
+
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Systems)
+	// TObjectPtr<UPrototypeEquipmentManagerComponent> EquipmentManager;
+	//
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Systems)
+	// TObjectPtr<UPrototypeQuickBarComponent> QuickBar;
+
 private:
-	UPROPERTY(EditDefaultsOnly, Category= "Input")
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputActionToGameplayTag> InputActionToGameplayTag;
-	UPROPERTY(EditDefaultsOnly, Category= "GAS Default Abilities")
+
+	UPROPERTY(EditDefaultsOnly, Category = "GAS Default Abilities")
 	TObjectPtr<UPrototypeAbilitySet> AbilitySet;
+
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
 	void AbilityInputTagReleased(FGameplayTag GameplayTag);
 	void AbilityInputTagHeld(FGameplayTag GameplayTag);
-	
-	UPROPERTY(VisibleInstanceOnly)
-	TObjectPtr<AItemBase> OverlappingItem;
 };
-

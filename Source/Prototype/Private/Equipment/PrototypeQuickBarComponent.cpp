@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Equipment/PrototypeQuickBarComponent.h"
 
 #include "Equipment/PrototypeEquipmentDefinition.h"
@@ -15,13 +14,17 @@
 class FLifetimeProperty;
 class UPrototypeEquipmentDefinition;
 
-UPrototypeQuickBarComponent::UPrototypeQuickBarComponent(const FObjectInitializer& ObjectInitializer)
+UPrototypeQuickBarComponent::UPrototypeQuickBarComponent(const FObjectInitializer &ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	SetIsReplicatedByDefault(true);
+	if (Slots.Num() < NumSlots)
+	{
+		Slots.AddDefaulted(NumSlots - Slots.Num());
+	}
 }
 
-void UPrototypeQuickBarComponent::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+void UPrototypeQuickBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
@@ -31,10 +34,6 @@ void UPrototypeQuickBarComponent::GetLifetimeReplicatedProps(TArray< FLifetimePr
 
 void UPrototypeQuickBarComponent::BeginPlay()
 {
-	if (Slots.Num() < NumSlots)
-	{
-		Slots.AddDefaulted(NumSlots - Slots.Num());
-	}
 
 	Super::BeginPlay();
 }
@@ -46,7 +45,7 @@ void UPrototypeQuickBarComponent::CycleActiveSlotForward()
 		return;
 	}
 
-	const int32 OldIndex = (ActiveSlotIndex < 0 ? Slots.Num()-1 : ActiveSlotIndex);
+	const int32 OldIndex = (ActiveSlotIndex < 0 ? Slots.Num() - 1 : ActiveSlotIndex);
 	int32 NewIndex = ActiveSlotIndex;
 	do
 	{
@@ -66,7 +65,7 @@ void UPrototypeQuickBarComponent::CycleActiveSlotBackward()
 		return;
 	}
 
-	const int32 OldIndex = (ActiveSlotIndex < 0 ? Slots.Num()-1 : ActiveSlotIndex);
+	const int32 OldIndex = (ActiveSlotIndex < 0 ? Slots.Num() - 1 : ActiveSlotIndex);
 	int32 NewIndex = ActiveSlotIndex;
 	do
 	{
@@ -84,14 +83,14 @@ void UPrototypeQuickBarComponent::EquipItemInSlot()
 	check(Slots.IsValidIndex(ActiveSlotIndex));
 	check(EquippedItem == nullptr);
 
-	if (UPTInventoryItemInstance* SlotItem = Slots[ActiveSlotIndex])
+	if (UPTInventoryItemInstance *SlotItem = Slots[ActiveSlotIndex])
 	{
-		if (const UPTInventoryFragment_EquippableItem* EquipInfo = SlotItem->FindFragmentByClass<UPTInventoryFragment_EquippableItem>())
+		if (const UPTInventoryFragment_EquippableItem *EquipInfo = SlotItem->FindFragmentByClass<UPTInventoryFragment_EquippableItem>())
 		{
 			TSubclassOf<UPrototypeEquipmentDefinition> EquipDef = EquipInfo->EquipmentDefinition;
 			if (EquipDef != nullptr)
 			{
-				if (UPrototypeEquipmentManagerComponent* EquipmentManager = FindEquipmentManager())
+				if (UPrototypeEquipmentManagerComponent *EquipmentManager = FindEquipmentManager())
 				{
 					EquippedItem = EquipmentManager->EquipItem(EquipDef);
 					if (EquippedItem != nullptr)
@@ -106,7 +105,7 @@ void UPrototypeQuickBarComponent::EquipItemInSlot()
 
 void UPrototypeQuickBarComponent::UnequipItemInSlot()
 {
-	if (UPrototypeEquipmentManagerComponent* EquipmentManager = FindEquipmentManager())
+	if (UPrototypeEquipmentManagerComponent *EquipmentManager = FindEquipmentManager())
 	{
 		if (EquippedItem != nullptr)
 		{
@@ -116,11 +115,11 @@ void UPrototypeQuickBarComponent::UnequipItemInSlot()
 	}
 }
 
-UPrototypeEquipmentManagerComponent* UPrototypeQuickBarComponent::FindEquipmentManager() const
+UPrototypeEquipmentManagerComponent *UPrototypeQuickBarComponent::FindEquipmentManager() const
 {
-	if (AController* OwnerController = Cast<AController>(GetOwner()))
+	if (AController *OwnerController = Cast<AController>(GetOwner()))
 	{
-		if (APawn* Pawn = OwnerController->GetPawn())
+		if (APawn *Pawn = OwnerController->GetPawn())
 		{
 			return Pawn->FindComponentByClass<UPrototypeEquipmentManagerComponent>();
 		}
@@ -130,7 +129,7 @@ UPrototypeEquipmentManagerComponent* UPrototypeQuickBarComponent::FindEquipmentM
 
 void UPrototypeQuickBarComponent::SetActiveSlotIndex_Implementation(int32 NewIndex)
 {
-	
+
 	if (Slots.IsValidIndex(NewIndex) && (ActiveSlotIndex != NewIndex))
 	{
 		UnequipItemInSlot();
@@ -143,7 +142,7 @@ void UPrototypeQuickBarComponent::SetActiveSlotIndex_Implementation(int32 NewInd
 	}
 }
 
-UPTInventoryItemInstance* UPrototypeQuickBarComponent::GetActiveSlotItem() const
+UPTInventoryItemInstance *UPrototypeQuickBarComponent::GetActiveSlotItem() const
 {
 	return Slots.IsValidIndex(ActiveSlotIndex) ? Slots[ActiveSlotIndex] : nullptr;
 }
@@ -151,7 +150,7 @@ UPTInventoryItemInstance* UPrototypeQuickBarComponent::GetActiveSlotItem() const
 int32 UPrototypeQuickBarComponent::GetNextFreeItemSlot() const
 {
 	int32 SlotIndex = 0;
-	for (const TObjectPtr<UPTInventoryItemInstance>& ItemPtr : Slots)
+	for (const TObjectPtr<UPTInventoryItemInstance> &ItemPtr : Slots)
 	{
 		if (ItemPtr == nullptr)
 		{
@@ -163,7 +162,7 @@ int32 UPrototypeQuickBarComponent::GetNextFreeItemSlot() const
 	return INDEX_NONE;
 }
 
-void UPrototypeQuickBarComponent::AddItemToSlot(int32 SlotIndex, UPTInventoryItemInstance* Item)
+void UPrototypeQuickBarComponent::AddItemToSlot(int32 SlotIndex, UPTInventoryItemInstance *Item)
 {
 	if (Slots.IsValidIndex(SlotIndex) && (Item != nullptr))
 	{
@@ -175,9 +174,9 @@ void UPrototypeQuickBarComponent::AddItemToSlot(int32 SlotIndex, UPTInventoryIte
 	}
 }
 
-UPTInventoryItemInstance* UPrototypeQuickBarComponent::RemoveItemFromSlot(int32 SlotIndex)
+UPTInventoryItemInstance *UPrototypeQuickBarComponent::RemoveItemFromSlot(int32 SlotIndex)
 {
-	UPTInventoryItemInstance* Result = nullptr;
+	UPTInventoryItemInstance *Result = nullptr;
 
 	if (ActiveSlotIndex == SlotIndex)
 	{
@@ -201,10 +200,9 @@ UPTInventoryItemInstance* UPrototypeQuickBarComponent::RemoveItemFromSlot(int32 
 
 void UPrototypeQuickBarComponent::OnRep_Slots()
 {
-
 }
 
 void UPrototypeQuickBarComponent::OnRep_ActiveSlotIndex()
 {
-	
+	// print the active slot index
 }

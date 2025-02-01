@@ -20,10 +20,7 @@ class PROTOTYPE_API APlayerControllerBase : public APlayerController
 	APlayerControllerBase();
 	
 public:
-	UPROPERTY(EditDefaultsOnly, Category="Inventory")
-	TObjectPtr<UPTInventoryManagerComponent> InventoryManagerComponent;
-	UPROPERTY(EditDefaultsOnly, Category="Equipment")
-	TObjectPtr<UPrototypeQuickBarComponent> QuickBarComponent;
+	
 	
 	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;
 	virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;
@@ -33,6 +30,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Prototype|PlayerController")
 	UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
+
+
 	
 
 private:

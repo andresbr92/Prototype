@@ -6,6 +6,7 @@
 #include "Equipment/PrototypeEquipmentInstance.h"
 
 UPrototypeEquipmentDefinition::UPrototypeEquipmentDefinition(const FObjectInitializer& ObjectInitializer)
+: Super(ObjectInitializer)
 {
 	InstanceType = UPrototypeEquipmentInstance::StaticClass();
 }

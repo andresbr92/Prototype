@@ -33,10 +33,10 @@ private:
 	friend UPrototypeEquipmentManagerComponent;
 
 	// The equipment class that got equipped
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<UPrototypeEquipmentDefinition> EquipmentDefinition;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPrototypeEquipmentInstance> Instance;
 
 	// Authority-only list of grante handles
@@ -80,9 +80,9 @@ private:
 	friend UPrototypeEquipmentManagerComponent;
 	
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TArray<FPTAppliedEquipmentEntry> Entries;
-	UPROPERTY(NotReplicated)
+	UPROPERTY(NotReplicated, VisibleAnywhere)
 	TObjectPtr<UActorComponent> OwnerComponent;
 };
 template<>
@@ -133,7 +133,7 @@ public:
 	}
 
 private:
-	UPROPERTY(Replicated)
+	UPROPERTY(Replicated, VisibleAnywhere)
 	FPTEquipmentList EquipmentList;
 
 	
