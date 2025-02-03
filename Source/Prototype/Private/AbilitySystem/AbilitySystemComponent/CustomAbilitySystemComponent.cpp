@@ -180,12 +180,12 @@ void UCustomAbilitySystemComponent::AbilitySpecInputPressed(FGameplayAbilitySpec
 	if (Spec.IsActive())
 	{
 		PRAGMA_DISABLE_DEPRECATION_WARNINGS
-				const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+		const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
 		FPredictionKey OriginalPredictionKey = Instance ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey() : Spec.ActivationInfo.GetActivationPredictionKey();
 		PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
-				// Invoke the InputPressed event. This is not replicated here. If someone is listening, they may replicate the InputPressed event to the server.
-				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, OriginalPredictionKey);
+		// Invoke the InputPressed event. This is not replicated here. If someone is listening, they may replicate the InputPressed event to the server.
+		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, OriginalPredictionKey);
 	}
 }
 
@@ -197,12 +197,12 @@ void UCustomAbilitySystemComponent::AbilitySpecInputReleased(FGameplayAbilitySpe
 	if (Spec.IsActive())
 	{
 		PRAGMA_DISABLE_DEPRECATION_WARNINGS
-				const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+		const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
 		FPredictionKey OriginalPredictionKey = Instance ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey() : Spec.ActivationInfo.GetActivationPredictionKey();
 		PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
-				// Invoke the InputReleased event. This is not replicated here. If someone is listening, they may replicate the InputReleased event to the server.
-				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, Spec.Handle, OriginalPredictionKey);
+		// Invoke the InputReleased event. This is not replicated here. If someone is listening, they may replicate the InputReleased event to the server.
+		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, Spec.Handle, OriginalPredictionKey);
 	}
 }
 

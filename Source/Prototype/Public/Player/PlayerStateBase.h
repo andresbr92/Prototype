@@ -9,6 +9,7 @@
 
 class UCustomAbilitySystemComponent;
 class UAttributeSet;
+class APortalBase;
 /**
  * 
  */
@@ -21,6 +22,12 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; };
 	virtual UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<APortalBase> PortalInteractingWith;
+	UFUNCTION(BlueprintCallable, Category="Prototype|PlayerState")
+	void SetPortalInteractingWith(APortalBase* Portal);
+	UFUNCTION(BlueprintCallable, Category="Prototype|PlayerState")
+	APortalBase* GetPortalInteractingWith() const;
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category= "Ability System")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

@@ -25,21 +25,21 @@ void UCustomInputComponent::BindAbilityActions(UInputActionToGameplayTag* InputA
 	ReleasedFuncType ReleasedFunc, HeldFuncType HeldFunc)
 {
 	check(InputActionToGameplayTag)
-	for (const auto AbilityWithTag: InputActionToGameplayTag->InputActionToGameplayTag)
+	for (const auto ActionToGameplayTagStruct: InputActionToGameplayTag->InputActionToGameplayTag)
 	{
-		if (AbilityWithTag.InputAction && AbilityWithTag.GameplayTag.IsValid())
+		if (ActionToGameplayTagStruct.InputAction && ActionToGameplayTagStruct.GameplayTag.IsValid())
 		{
 			if (PressedFunc)
 			{
-				BindAction(AbilityWithTag.InputAction, ETriggerEvent::Started, Object, PressedFunc, AbilityWithTag.GameplayTag);
+				BindAction(ActionToGameplayTagStruct.InputAction, ETriggerEvent::Started, Object, PressedFunc, ActionToGameplayTagStruct.GameplayTag);
 			}
 			if (ReleasedFunc)
 			{
-				BindAction(AbilityWithTag.InputAction, ETriggerEvent::Completed, Object, ReleasedFunc, AbilityWithTag.GameplayTag);
+				BindAction(ActionToGameplayTagStruct.InputAction, ETriggerEvent::Completed, Object, ReleasedFunc, ActionToGameplayTagStruct.GameplayTag);
 			}
 			if (HeldFunc)
 			{
-				BindAction(AbilityWithTag.InputAction, ETriggerEvent::Triggered, Object, HeldFunc, AbilityWithTag.GameplayTag);
+				BindAction(ActionToGameplayTagStruct.InputAction, ETriggerEvent::Triggered, Object, HeldFunc, ActionToGameplayTagStruct.GameplayTag);
 			}
 		}
 	}

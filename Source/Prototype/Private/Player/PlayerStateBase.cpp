@@ -2,7 +2,7 @@
 
 
 #include "Player/PlayerStateBase.h"
-
+#include "Items/PortalBase.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
 #include "AbilitySystem/AttributeSets/AttributeSetBase.h"
@@ -24,3 +24,14 @@ UCustomAbilitySystemComponent* APlayerStateBase::GetCustomAbilitySystemComponent
 {
 	return CastChecked<UCustomAbilitySystemComponent>(AbilitySystemComponent, ECastCheckedType::NullAllowed);
 }
+
+void APlayerStateBase::SetPortalInteractingWith(APortalBase* Portal)
+{
+	PortalInteractingWith = Portal;
+}
+
+APortalBase* APlayerStateBase::GetPortalInteractingWith() const
+{
+	return PortalInteractingWith;
+}
+

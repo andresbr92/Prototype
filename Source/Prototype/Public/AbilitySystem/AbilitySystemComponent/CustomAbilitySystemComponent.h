@@ -41,13 +41,13 @@ public:
 	// Handles to abilities that had their input pressed this frame.
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TArray<FGameplayAbilitySpecHandle> InputPressedSpecHandles;
-	UPROPERTY(VisibleAnywhere, Category = "Ability System")
-	// Handles to abilities that had their input released this frame.
-	TArray<FGameplayAbilitySpecHandle> InputReleasedSpecHandles;
-	UPROPERTY(VisibleAnywhere, Category = "Ability System")
-	// Handles to abilities that have their input held.
-	TArray<FGameplayAbilitySpecHandle> InputHeldSpecHandles;
-	
-	
 
+	// Handles to abilities that had their input released this frame.
+	UPROPERTY(VisibleAnywhere, Category = "Ability System")
+	TArray<FGameplayAbilitySpecHandle> InputReleasedSpecHandles;
+
+	
+	// Handles to abilities that have their input held.
+	UPROPERTY(VisibleAnywhere, Category = "Ability System")
+	TArray<FGameplayAbilitySpecHandle> InputHeldSpecHandles;
 };
