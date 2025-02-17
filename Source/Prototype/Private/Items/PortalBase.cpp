@@ -30,7 +30,7 @@ APortalBase::APortalBase()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
-	UE_LOG(LogPortalBase, Log, TEXT("Portal Base Constructor - ASC Created and Configured"));
+	
 }
 
 void APortalBase::BeginPlay()

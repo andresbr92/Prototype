@@ -13,6 +13,7 @@
 #include "InputActionValue.h"
 #include "AbilitySystem/PrototypeAbilitySet.h"
 #include "AbilitySystem/AbilitySystemComponent/CustomAbilitySystemComponent.h"
+#include "Characters/PrototypeCharacterMovementComponent.h"
 #include "Equipment/PrototypeEquipmentManagerComponent.h"
 #include "Equipment/PrototypeQuickBarComponent.h"
 #include "Input/CustomInputComponent.h"
@@ -23,7 +24,8 @@
 //////////////////////////////////////////////////////////////////////////
 // APrototypeCharacter
 
-APrototypeCharacter::APrototypeCharacter()
+APrototypeCharacter::APrototypeCharacter(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer.SetDefaultSubobjectClass<UPrototypeCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -42,7 +44,7 @@ APrototypeCharacter::APrototypeCharacter()
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
-	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
+	// GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 

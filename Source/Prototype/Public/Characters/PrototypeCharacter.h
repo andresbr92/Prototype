@@ -54,7 +54,7 @@ class APrototypeCharacter : public ACharacterBase
 	UInputAction* LookAction;
 
 public:
-	APrototypeCharacter();
+	APrototypeCharacter(const class FObjectInitializer& ObjectInitializer);
 	
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
