@@ -17,6 +17,10 @@ void UAttributeSetBase::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributeSetBase, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributeSetBase, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributeSetBase, MaxStamina, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAttributeSetBase, StaminaRegenRate, COND_None, REPNOTIFY_Always);
+
+
 }
 
 void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -57,7 +61,29 @@ void UAttributeSetBase::OnRep_Stamina(const FGameplayAttributeData& OldStamina)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, Stamina, OldStamina);
 }
+
+void UAttributeSetBase::OnRep_Age(const FGameplayAttributeData& OldAge)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, Age, OldAge);
+}
+
+void UAttributeSetBase::OnRep_MaxAge(const FGameplayAttributeData& OldMaxAge)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, MaxAge, OldMaxAge);
+}
+
 void UAttributeSetBase::OnRep_MaxStamina(const FGameplayAttributeData& OldMaxStamina)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, MaxStamina, OldMaxStamina);
 }
+
+void UAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, MoveSpeed, OldMoveSpeed);
+}
+
+void UAttributeSetBase::OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributeSetBase, StaminaRegenRate, OldStaminaRegenRate);
+}
+

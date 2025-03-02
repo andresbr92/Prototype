@@ -39,6 +39,9 @@ protected:
 private:
 	FGameplayAbilitySpecHandle InteractionAbilityHandle;
 public:
+	bool bStartupEffectsApplied = false;
+	bool bCharacterAbilitiesGiven = false;
+	
 	// Handles to abilities that had their input pressed this frame.
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TArray<FGameplayAbilitySpecHandle> InputPressedSpecHandles;

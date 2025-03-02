@@ -78,7 +78,6 @@ protected:
 	
 	virtual void InitializeAbilitySystem();
 	virtual void InitializeAttributes() override;
-	virtual void GrantDefaultAbilities();
 	
 
 	
@@ -92,6 +91,7 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPrototypeEquipmentManagerComponent> EquipmentManager;
+	virtual void AddCharacterAbilities() override;
 
 
 	
@@ -100,9 +100,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category= "Input")
 	TObjectPtr<UInputActionToGameplayTag> InputActionToGameplayTag;
 	
-	UPROPERTY(EditDefaultsOnly, Category= "GAS Default Abilities")
-	TObjectPtr<UPrototypeAbilitySet> AbilitySet;
-	
+
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
 	void AbilityInputTagReleased(FGameplayTag GameplayTag);
 	void AbilityInputTagHeld(FGameplayTag GameplayTag);

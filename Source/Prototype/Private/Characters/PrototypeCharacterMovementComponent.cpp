@@ -10,37 +10,15 @@
 // Sets default values for this component's properties
 UPrototypeCharacterMovementComponent::UPrototypeCharacterMovementComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	SprintSpeedMultiplier = 1.4f;
+	CrouchSpeedMultiplier = 0.5f;
 }
 
-
-// Called when the game starts
-void UPrototypeCharacterMovementComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UPrototypeCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                                         FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
 
 float UPrototypeCharacterMovementComponent::GetMaxSpeed() const
 {
 	// return Super::GetMaxSpeed();
-	APrototypeCharacter* Owner = Cast<APrototypeCharacter>(GetOwner());
+	ACharacterBase* Owner = Cast<ACharacterBase>(GetOwner());
 
 	if (!Owner)
 	{
@@ -52,6 +30,36 @@ float UPrototypeCharacterMovementComponent::GetMaxSpeed() const
 	{
 		return 0.0f;
 	}
-	return Owner->GetCharacterMovement()->MaxWalkSpeed;
+
+	if (RequestToStartSprinting)
+	{
+		 return Owner->GetMoveSpeed() * SprintSpeedMultiplier;
+		
+	}
+	if (RequestToStartCrouching)
+	{
+		return Owner->GetMoveSpeed() * CrouchSpeedMultiplier;
+	}
+	return Owner->GetMoveSpeed();
 }
 
+void UPrototypeCharacterMovementComponent::StartSprinting()
+{
+	RequestToStartSprinting = true;	
+}
+
+void UPrototypeCharacterMovementComponent::StopSprinting()
+{
+	RequestToStartSprinting = false;
+}
+
+void UPrototypeCharacterMovementComponent::StartCrouching()
+{
+	RequestToStartCrouching = true;
+}
+
+
+void UPrototypeCharacterMovementComponent::StopCrouching()
+{
+	RequestToStartCrouching = false;
+}

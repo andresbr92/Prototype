@@ -8,7 +8,7 @@
 #include "PlayerStateBase.generated.h"
 
 class UCustomAbilitySystemComponent;
-class UAttributeSet;
+class UAttributeSetBase;
 class APortalBase;
 /**
  * 
@@ -20,7 +20,7 @@ class PROTOTYPE_API APlayerStateBase : public APlayerState, public IAbilitySyste
 public:
 	APlayerStateBase();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const { return AttributeSet; };
+	class UAttributeSetBase* GetAttributeSetBase() const;
 	virtual UCustomAbilitySystemComponent* GetCustomAbilitySystemComponent() const;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<APortalBase> PortalInteractingWith;
@@ -33,7 +33,7 @@ protected:
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category= "Ability System")
-	TObjectPtr<UAttributeSet> AttributeSet;
+	TObjectPtr<UAttributeSetBase> AttributeSet;
 
 	
 
@@ -41,7 +41,9 @@ protected:
 	
 
 	
-private:
+public:
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDPlayerState|Attributes")
+	float GetMoveSpeed() const;
 	
 	
 };

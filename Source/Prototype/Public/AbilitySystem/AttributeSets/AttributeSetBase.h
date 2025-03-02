@@ -47,7 +47,20 @@ public:
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Stamina);
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxStamina)
 	FGameplayAttributeData MaxStamina;
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_StaminaRegenRate)
+	FGameplayAttributeData StaminaRegenRate;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, StaminaRegenRate)
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, MaxStamina);
+	UPROPERTY(BlueprintReadOnly, Category= "Attributes", ReplicatedUsing = OnRep_Age)
+	FGameplayAttributeData Age;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Age);
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxAge)
+	FGameplayAttributeData MaxAge;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, MaxAge);
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MoveSpeed)
+	FGameplayAttributeData MoveSpeed;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, MoveSpeed);
+
 
 
 
@@ -61,5 +74,13 @@ protected:
 	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
 	UFUNCTION()
 	virtual void OnRep_Stamina(const FGameplayAttributeData& OldStamina);
+	UFUNCTION()
+	virtual void OnRep_Age(const FGameplayAttributeData& OldAge);
+	UFUNCTION()
+	virtual void OnRep_MaxAge(const FGameplayAttributeData& OldMaxAge);
+	UFUNCTION()
+	virtual void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
+	UFUNCTION()
+	virtual void OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate);
 };
 

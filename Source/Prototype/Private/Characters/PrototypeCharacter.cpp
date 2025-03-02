@@ -75,7 +75,8 @@ void APrototypeCharacter::InitializeAbilitySystem()
 		AbilitySystemComponent = Cast<UCustomAbilitySystemComponent>(ASC);
 		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateBase, this);
 		
-		
+		// Initialize AttributeSet reference
+		AttributeSetBase = PlayerStateBase->GetAttributeSetBase();
 	}
 }
 
@@ -84,21 +85,11 @@ void APrototypeCharacter::InitializeAttributes()
 	Super::InitializeAttributes();
 }
 
-void APrototypeCharacter::GrantDefaultAbilities()
+
+void APrototypeCharacter::AddCharacterAbilities()
 {
-	// if (!DefaultAbilities.IsEmpty())
-	// {
-	// 	AbilitySystemComponent->GrantDefaultAbilities(DefaultAbilities);
-	// }
-	if (AbilitySet)
-	{
-		AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr);
-	}
+	Super::AddCharacterAbilities();
 }
-
-
-
-
 
 void APrototypeCharacter::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
@@ -122,8 +113,9 @@ void APrototypeCharacter::PossessedBy(AController* NewController)
 
 	// Initialize Ability System for server
 	InitializeAbilitySystem();
+	AddCharacterAbilities();
 	InitializeAttributes();
-	GrantDefaultAbilities();
+	AddStartupEffects();
 	
 
 }
@@ -133,6 +125,8 @@ void APrototypeCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 	// Initialize Ability system for client
 	InitializeAbilitySystem();
+	InitializeAttributes();
+	
 }
 
 //////////////////////////////////////////////////////////////////////////

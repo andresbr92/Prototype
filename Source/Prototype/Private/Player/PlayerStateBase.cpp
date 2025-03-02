@@ -20,6 +20,11 @@ UAbilitySystemComponent* APlayerStateBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UAttributeSetBase * APlayerStateBase::GetAttributeSetBase() const
+{
+	return AttributeSet.Get();
+}
+
 UCustomAbilitySystemComponent* APlayerStateBase::GetCustomAbilitySystemComponent() const
 {
 	return CastChecked<UCustomAbilitySystemComponent>(AbilitySystemComponent, ECastCheckedType::NullAllowed);
@@ -33,5 +38,10 @@ void APlayerStateBase::SetPortalInteractingWith(APortalBase* Portal)
 APortalBase* APlayerStateBase::GetPortalInteractingWith() const
 {
 	return PortalInteractingWith;
+}
+
+float APlayerStateBase::GetMoveSpeed() const
+{
+	return AttributeSet->GetMoveSpeed();
 }
 
